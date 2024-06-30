@@ -17,7 +17,7 @@ use anchor_spl::token_2022_extensions::token_metadata::{
     TokenMetadataUpdateField,
 };
 
-declare_id!("5HwYP8SAyvpT1wuwWHL8iFqbKs7a7v49sDRLELhj8cQK");
+declare_id!("Bp7LbjQdrAGGQft9TyJYiGvmKP6NzHZvvD35wiW12FMQ");
 
 const AUTHORITY_SEED: &[u8] = b"SOLANA_SCIENCE_AUTHORITY_SEED";
 

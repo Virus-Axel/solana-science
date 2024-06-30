@@ -1,11 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c76kioxt2ivp4"]
+[gd_scene load_steps=3 format=3 uid="uid://c76kioxt2ivp4"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_wwykl"]
 [ext_resource type="JSON" path="res://solana_science.json" id="2_g0uxn"]
-
-[sub_resource type="Keypair" id="Keypair_silgb"]
-seed = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-unique = false
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -22,10 +18,80 @@ json_file = ExtResource("2_g0uxn")
 idl = {
 "address": "Bp7LbjQdrAGGQft9TyJYiGvmKP6NzHZvvD35wiW12FMQ",
 "instructions": [{
-"accounts": [],
+"accounts": [{
+"name": "payer",
+"signer": true,
+"writable": true
+}, {
+"name": "destination",
+"pda": {
+"program": {
+"kind": "const",
+"value": [140.0, 151.0, 37.0, 143.0, 78.0, 36.0, 137.0, 241.0, 187.0, 61.0, 16.0, 41.0, 20.0, 142.0, 13.0, 131.0, 11.0, 90.0, 19.0, 153.0, 218.0, 255.0, 16.0, 132.0, 4.0, 142.0, 123.0, 216.0, 219.0, 233.0, 248.0, 89.0]
+},
+"seeds": [{
+"kind": "account",
+"path": "payer"
+}, {
+"kind": "const",
+"value": [6.0, 221.0, 246.0, 225.0, 215.0, 101.0, 161.0, 147.0, 217.0, 203.0, 225.0, 70.0, 206.0, 235.0, 121.0, 172.0, 28.0, 180.0, 133.0, 237.0, 95.0, 91.0, 55.0, 145.0, 58.0, 140.0, 245.0, 133.0, 126.0, 255.0, 0.0, 169.0]
+}, {
+"kind": "account",
+"path": "scientist_mint"
+}]
+},
+"writable": true
+}, {
+"name": "scientist_mint"
+}, {
+"name": "scientist_authority",
+"pda": {
+"seeds": [{
+"kind": "const",
+"value": [83.0, 79.0, 76.0, 65.0, 78.0, 65.0, 95.0, 83.0, 67.0, 73.0, 69.0, 78.0, 67.0, 69.0, 95.0, 65.0, 85.0, 84.0, 72.0, 79.0, 82.0, 73.0, 84.0, 89.0, 95.0, 83.0, 69.0, 69.0, 68.0]
+}]
+}
+}, {
+"address": "11111111111111111111111111111111",
+"name": "system_program"
+}, {
+"address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+"name": "token_program"
+}, {
+"address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+"name": "associated_token_program"
+}],
 "args": [],
 "discriminator": [175.0, 175.0, 109.0, 31.0, 13.0, 152.0, 155.0, 237.0],
 "name": "initialize"
+}, {
+"accounts": [{
+"name": "payer",
+"signer": true,
+"writable": true
+}, {
+"name": "mint",
+"signer": true,
+"writable": true
+}, {
+"name": "scientist_authority",
+"pda": {
+"seeds": [{
+"kind": "const",
+"value": [83.0, 79.0, 76.0, 65.0, 78.0, 65.0, 95.0, 83.0, 67.0, 73.0, 69.0, 78.0, 67.0, 69.0, 95.0, 65.0, 85.0, 84.0, 72.0, 79.0, 82.0, 73.0, 84.0, 89.0, 95.0, 83.0, 69.0, 69.0, 68.0]
+}]
+},
+"writable": true
+}, {
+"address": "11111111111111111111111111111111",
+"name": "system_program"
+}, {
+"address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+"name": "token_program"
+}],
+"args": [],
+"discriminator": [214.0, 14.0, 67.0, 235.0, 171.0, 31.0, 53.0, 80.0],
+"name": "new_scientist"
 }, {
 "accounts": [{
 "name": "owner",
@@ -42,7 +108,8 @@ idl = {
 "kind": "const",
 "value": [83.0, 79.0, 76.0, 65.0, 78.0, 65.0, 95.0, 83.0, 67.0, 73.0, 69.0, 78.0, 67.0, 69.0, 95.0, 65.0, 85.0, 84.0, 72.0, 79.0, 82.0, 73.0, 84.0, 89.0, 95.0, 83.0, 69.0, 69.0, 68.0]
 }]
-}
+},
+"writable": true
 }, {
 "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
 "name": "token_program"
@@ -60,4 +127,3 @@ idl = {
 }
 
 [node name="Transaction" type="Transaction" parent="."]
-payer = SubResource("Keypair_silgb")

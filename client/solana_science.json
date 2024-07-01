@@ -26,7 +26,7 @@
 					"signer": true
 				},
 				{
-					"name": "destination",
+					"name": "scientist_account",
 					"writable": true,
 					"pda": {
 						"seeds": [
@@ -116,7 +116,286 @@
 					}
 				},
 				{
+					"name": "decent_book_account",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"path": "payer"
+							},
+							{
+								"kind": "const",
+								"value": [
+									6,
+									221,
+									246,
+									225,
+									215,
+									101,
+									161,
+									147,
+									217,
+									203,
+									225,
+									70,
+									206,
+									235,
+									121,
+									172,
+									28,
+									180,
+									133,
+									237,
+									95,
+									91,
+									55,
+									145,
+									58,
+									140,
+									245,
+									133,
+									126,
+									255,
+									0,
+									169
+								]
+							},
+							{
+								"kind": "account",
+								"path": "decent_book_mint"
+							}
+						],
+						"program": {
+							"kind": "const",
+							"value": [
+								140,
+								151,
+								37,
+								143,
+								78,
+								36,
+								137,
+								241,
+								187,
+								61,
+								16,
+								41,
+								20,
+								142,
+								13,
+								131,
+								11,
+								90,
+								19,
+								153,
+								218,
+								255,
+								16,
+								132,
+								4,
+								142,
+								123,
+								216,
+								219,
+								233,
+								248,
+								89
+							]
+						}
+					}
+				},
+				{
+					"name": "interesting_book_account",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"path": "payer"
+							},
+							{
+								"kind": "const",
+								"value": [
+									6,
+									221,
+									246,
+									225,
+									215,
+									101,
+									161,
+									147,
+									217,
+									203,
+									225,
+									70,
+									206,
+									235,
+									121,
+									172,
+									28,
+									180,
+									133,
+									237,
+									95,
+									91,
+									55,
+									145,
+									58,
+									140,
+									245,
+									133,
+									126,
+									255,
+									0,
+									169
+								]
+							},
+							{
+								"kind": "account",
+								"path": "interesting_book_mint"
+							}
+						],
+						"program": {
+							"kind": "const",
+							"value": [
+								140,
+								151,
+								37,
+								143,
+								78,
+								36,
+								137,
+								241,
+								187,
+								61,
+								16,
+								41,
+								20,
+								142,
+								13,
+								131,
+								11,
+								90,
+								19,
+								153,
+								218,
+								255,
+								16,
+								132,
+								4,
+								142,
+								123,
+								216,
+								219,
+								233,
+								248,
+								89
+							]
+						}
+					}
+				},
+				{
+					"name": "fascinating_book_account",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"path": "payer"
+							},
+							{
+								"kind": "const",
+								"value": [
+									6,
+									221,
+									246,
+									225,
+									215,
+									101,
+									161,
+									147,
+									217,
+									203,
+									225,
+									70,
+									206,
+									235,
+									121,
+									172,
+									28,
+									180,
+									133,
+									237,
+									95,
+									91,
+									55,
+									145,
+									58,
+									140,
+									245,
+									133,
+									126,
+									255,
+									0,
+									169
+								]
+							},
+							{
+								"kind": "account",
+								"path": "fascinating_book_mint"
+							}
+						],
+						"program": {
+							"kind": "const",
+							"value": [
+								140,
+								151,
+								37,
+								143,
+								78,
+								36,
+								137,
+								241,
+								187,
+								61,
+								16,
+								41,
+								20,
+								142,
+								13,
+								131,
+								11,
+								90,
+								19,
+								153,
+								218,
+								255,
+								16,
+								132,
+								4,
+								142,
+								123,
+								216,
+								219,
+								233,
+								248,
+								89
+							]
+						}
+					}
+				},
+				{
 					"name": "scientist_mint"
+				},
+				{
+					"name": "decent_book_mint"
+				},
+				{
+					"name": "interesting_book_mint"
+				},
+				{
+					"name": "fascinating_book_mint"
 				},
 				{
 					"name": "scientist_authority",
@@ -175,6 +454,91 @@
 			"args": []
 		},
 		{
+			"name": "new_game",
+			"discriminator": [
+				211,
+				13,
+				182,
+				128,
+				71,
+				187,
+				248,
+				202
+			],
+			"accounts": [
+				{
+					"name": "payer",
+					"writable": true,
+					"signer": true
+				},
+				{
+					"name": "decent_book_mint",
+					"writable": true,
+					"signer": true
+				},
+				{
+					"name": "interesting_book_mint",
+					"writable": true,
+					"signer": true
+				},
+				{
+					"name": "fascinating_book_mint",
+					"writable": true,
+					"signer": true
+				},
+				{
+					"name": "scientist_authority",
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [
+									83,
+									79,
+									76,
+									65,
+									78,
+									65,
+									95,
+									83,
+									67,
+									73,
+									69,
+									78,
+									67,
+									69,
+									95,
+									65,
+									85,
+									84,
+									72,
+									79,
+									82,
+									73,
+									84,
+									89,
+									95,
+									83,
+									69,
+									69,
+									68
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "system_program",
+					"address": "11111111111111111111111111111111"
+				},
+				{
+					"name": "token_program",
+					"address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+				}
+			],
+			"args": []
+		},
+		{
 			"name": "new_scientist",
 			"discriminator": [
 				214,
@@ -193,7 +557,7 @@
 					"signer": true
 				},
 				{
-					"name": "mint",
+					"name": "scientist_mint",
 					"writable": true,
 					"signer": true
 				},
@@ -251,6 +615,149 @@
 			"args": []
 		},
 		{
+			"name": "publish_book",
+			"discriminator": [
+				216,
+				186,
+				102,
+				235,
+				22,
+				62,
+				126,
+				177
+			],
+			"accounts": [
+				{
+					"name": "owner",
+					"writable": true,
+					"signer": true
+				},
+				{
+					"name": "game_account",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [
+									83,
+									79,
+									76,
+									65,
+									78,
+									65,
+									95,
+									83,
+									67,
+									73,
+									69,
+									78,
+									67,
+									69,
+									95,
+									71,
+									65,
+									77,
+									69,
+									95,
+									65,
+									67,
+									67,
+									79,
+									85,
+									78,
+									84
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "decent_book_account",
+					"writable": true
+				},
+				{
+					"name": "interesting_book_account",
+					"writable": true
+				},
+				{
+					"name": "fascinating_book_account",
+					"writable": true
+				},
+				{
+					"name": "scientist_mint",
+					"writable": true
+				},
+				{
+					"name": "decent_book_mint",
+					"writable": true
+				},
+				{
+					"name": "interesting_book_mint",
+					"writable": true
+				},
+				{
+					"name": "fascinating_book_mint",
+					"writable": true
+				},
+				{
+					"name": "scientist_authority",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [
+									83,
+									79,
+									76,
+									65,
+									78,
+									65,
+									95,
+									83,
+									67,
+									73,
+									69,
+									78,
+									67,
+									69,
+									95,
+									65,
+									85,
+									84,
+									72,
+									79,
+									82,
+									73,
+									84,
+									89,
+									95,
+									83,
+									69,
+									69,
+									68
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "previous_seller",
+					"writable": true
+				},
+				{
+					"name": "system_program",
+					"address": "11111111111111111111111111111111"
+				},
+				{
+					"name": "token_program",
+					"address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+				}
+			],
+			"args": []
+		},
+		{
 			"name": "research",
 			"discriminator": [
 				165,
@@ -268,11 +775,32 @@
 					"signer": true
 				},
 				{
-					"name": "scientist_token",
+					"name": "decent_book_account",
 					"writable": true
 				},
 				{
-					"name": "scientist_mint"
+					"name": "interesting_book_account",
+					"writable": true
+				},
+				{
+					"name": "fascinating_book_account",
+					"writable": true
+				},
+				{
+					"name": "scientist_mint",
+					"writable": true
+				},
+				{
+					"name": "decent_book_mint",
+					"writable": true
+				},
+				{
+					"name": "interesting_book_mint",
+					"writable": true
+				},
+				{
+					"name": "fascinating_book_mint",
+					"writable": true
 				},
 				{
 					"name": "scientist_authority",
@@ -321,7 +849,60 @@
 					"address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
 				}
 			],
-			"args": []
+			"args": [
+				{
+					"name": "book_type",
+					"type": "u8"
+				}
+			]
+		}
+	],
+	"accounts": [
+		{
+			"name": "GameAccount",
+			"discriminator": [
+				168,
+				26,
+				58,
+				96,
+				13,
+				208,
+				230,
+				188
+			]
+		}
+	],
+	"errors": [
+		{
+			"code": 6000,
+			"name": "BusyScientist",
+			"msg": "Scientist is busy"
+		}
+	],
+	"types": [
+		{
+			"name": "GameAccount",
+			"type": {
+				"kind": "struct",
+				"fields": [
+					{
+						"name": "sale_book",
+						"type": "pubkey"
+					},
+					{
+						"name": "seller",
+						"type": "pubkey"
+					},
+					{
+						"name": "highest_bidder",
+						"type": "pubkey"
+					},
+					{
+						"name": "highest_bid",
+						"type": "u64"
+					}
+				]
+			}
 		}
 	]
 }

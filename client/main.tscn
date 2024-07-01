@@ -16,14 +16,23 @@ script = ExtResource("1_wwykl")
 pid = "Bp7LbjQdrAGGQft9TyJYiGvmKP6NzHZvvD35wiW12FMQ"
 json_file = ExtResource("2_g0uxn")
 idl = {
+"accounts": [{
+"discriminator": [168.0, 26.0, 58.0, 96.0, 13.0, 208.0, 230.0, 188.0],
+"name": "GameAccount"
+}],
 "address": "Bp7LbjQdrAGGQft9TyJYiGvmKP6NzHZvvD35wiW12FMQ",
+"errors": [{
+"code": 6000.0,
+"msg": "Scientist is busy",
+"name": "BusyScientist"
+}],
 "instructions": [{
 "accounts": [{
 "name": "payer",
 "signer": true,
 "writable": true
 }, {
-"name": "destination",
+"name": "scientist_account",
 "pda": {
 "program": {
 "kind": "const",
@@ -42,7 +51,70 @@ idl = {
 },
 "writable": true
 }, {
+"name": "decent_book_account",
+"pda": {
+"program": {
+"kind": "const",
+"value": [140.0, 151.0, 37.0, 143.0, 78.0, 36.0, 137.0, 241.0, 187.0, 61.0, 16.0, 41.0, 20.0, 142.0, 13.0, 131.0, 11.0, 90.0, 19.0, 153.0, 218.0, 255.0, 16.0, 132.0, 4.0, 142.0, 123.0, 216.0, 219.0, 233.0, 248.0, 89.0]
+},
+"seeds": [{
+"kind": "account",
+"path": "payer"
+}, {
+"kind": "const",
+"value": [6.0, 221.0, 246.0, 225.0, 215.0, 101.0, 161.0, 147.0, 217.0, 203.0, 225.0, 70.0, 206.0, 235.0, 121.0, 172.0, 28.0, 180.0, 133.0, 237.0, 95.0, 91.0, 55.0, 145.0, 58.0, 140.0, 245.0, 133.0, 126.0, 255.0, 0.0, 169.0]
+}, {
+"kind": "account",
+"path": "decent_book_mint"
+}]
+},
+"writable": true
+}, {
+"name": "interesting_book_account",
+"pda": {
+"program": {
+"kind": "const",
+"value": [140.0, 151.0, 37.0, 143.0, 78.0, 36.0, 137.0, 241.0, 187.0, 61.0, 16.0, 41.0, 20.0, 142.0, 13.0, 131.0, 11.0, 90.0, 19.0, 153.0, 218.0, 255.0, 16.0, 132.0, 4.0, 142.0, 123.0, 216.0, 219.0, 233.0, 248.0, 89.0]
+},
+"seeds": [{
+"kind": "account",
+"path": "payer"
+}, {
+"kind": "const",
+"value": [6.0, 221.0, 246.0, 225.0, 215.0, 101.0, 161.0, 147.0, 217.0, 203.0, 225.0, 70.0, 206.0, 235.0, 121.0, 172.0, 28.0, 180.0, 133.0, 237.0, 95.0, 91.0, 55.0, 145.0, 58.0, 140.0, 245.0, 133.0, 126.0, 255.0, 0.0, 169.0]
+}, {
+"kind": "account",
+"path": "interesting_book_mint"
+}]
+},
+"writable": true
+}, {
+"name": "fascinating_book_account",
+"pda": {
+"program": {
+"kind": "const",
+"value": [140.0, 151.0, 37.0, 143.0, 78.0, 36.0, 137.0, 241.0, 187.0, 61.0, 16.0, 41.0, 20.0, 142.0, 13.0, 131.0, 11.0, 90.0, 19.0, 153.0, 218.0, 255.0, 16.0, 132.0, 4.0, 142.0, 123.0, 216.0, 219.0, 233.0, 248.0, 89.0]
+},
+"seeds": [{
+"kind": "account",
+"path": "payer"
+}, {
+"kind": "const",
+"value": [6.0, 221.0, 246.0, 225.0, 215.0, 101.0, 161.0, 147.0, 217.0, 203.0, 225.0, 70.0, 206.0, 235.0, 121.0, 172.0, 28.0, 180.0, 133.0, 237.0, 95.0, 91.0, 55.0, 145.0, 58.0, 140.0, 245.0, 133.0, 126.0, 255.0, 0.0, 169.0]
+}, {
+"kind": "account",
+"path": "fascinating_book_mint"
+}]
+},
+"writable": true
+}, {
 "name": "scientist_mint"
+}, {
+"name": "decent_book_mint"
+}, {
+"name": "interesting_book_mint"
+}, {
+"name": "fascinating_book_mint"
 }, {
 "name": "scientist_authority",
 "pda": {
@@ -70,7 +142,42 @@ idl = {
 "signer": true,
 "writable": true
 }, {
-"name": "mint",
+"name": "decent_book_mint",
+"signer": true,
+"writable": true
+}, {
+"name": "interesting_book_mint",
+"signer": true,
+"writable": true
+}, {
+"name": "fascinating_book_mint",
+"signer": true,
+"writable": true
+}, {
+"name": "scientist_authority",
+"pda": {
+"seeds": [{
+"kind": "const",
+"value": [83.0, 79.0, 76.0, 65.0, 78.0, 65.0, 95.0, 83.0, 67.0, 73.0, 69.0, 78.0, 67.0, 69.0, 95.0, 65.0, 85.0, 84.0, 72.0, 79.0, 82.0, 73.0, 84.0, 89.0, 95.0, 83.0, 69.0, 69.0, 68.0]
+}]
+}
+}, {
+"address": "11111111111111111111111111111111",
+"name": "system_program"
+}, {
+"address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+"name": "token_program"
+}],
+"args": [],
+"discriminator": [211.0, 13.0, 182.0, 128.0, 71.0, 187.0, 248.0, 202.0],
+"name": "new_game"
+}, {
+"accounts": [{
+"name": "payer",
+"signer": true,
+"writable": true
+}, {
+"name": "scientist_mint",
 "signer": true,
 "writable": true
 }, {
@@ -95,12 +202,85 @@ idl = {
 }, {
 "accounts": [{
 "name": "owner",
-"signer": true
-}, {
-"name": "scientist_token",
+"signer": true,
 "writable": true
 }, {
-"name": "scientist_mint"
+"name": "game_account",
+"pda": {
+"seeds": [{
+"kind": "const",
+"value": [83.0, 79.0, 76.0, 65.0, 78.0, 65.0, 95.0, 83.0, 67.0, 73.0, 69.0, 78.0, 67.0, 69.0, 95.0, 71.0, 65.0, 77.0, 69.0, 95.0, 65.0, 67.0, 67.0, 79.0, 85.0, 78.0, 84.0]
+}]
+},
+"writable": true
+}, {
+"name": "decent_book_account",
+"writable": true
+}, {
+"name": "interesting_book_account",
+"writable": true
+}, {
+"name": "fascinating_book_account",
+"writable": true
+}, {
+"name": "scientist_mint",
+"writable": true
+}, {
+"name": "decent_book_mint",
+"writable": true
+}, {
+"name": "interesting_book_mint",
+"writable": true
+}, {
+"name": "fascinating_book_mint",
+"writable": true
+}, {
+"name": "scientist_authority",
+"pda": {
+"seeds": [{
+"kind": "const",
+"value": [83.0, 79.0, 76.0, 65.0, 78.0, 65.0, 95.0, 83.0, 67.0, 73.0, 69.0, 78.0, 67.0, 69.0, 95.0, 65.0, 85.0, 84.0, 72.0, 79.0, 82.0, 73.0, 84.0, 89.0, 95.0, 83.0, 69.0, 69.0, 68.0]
+}]
+},
+"writable": true
+}, {
+"name": "previous_seller",
+"writable": true
+}, {
+"address": "11111111111111111111111111111111",
+"name": "system_program"
+}, {
+"address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+"name": "token_program"
+}],
+"args": [],
+"discriminator": [216.0, 186.0, 102.0, 235.0, 22.0, 62.0, 126.0, 177.0],
+"name": "publish_book"
+}, {
+"accounts": [{
+"name": "owner",
+"signer": true
+}, {
+"name": "decent_book_account",
+"writable": true
+}, {
+"name": "interesting_book_account",
+"writable": true
+}, {
+"name": "fascinating_book_account",
+"writable": true
+}, {
+"name": "scientist_mint",
+"writable": true
+}, {
+"name": "decent_book_mint",
+"writable": true
+}, {
+"name": "interesting_book_mint",
+"writable": true
+}, {
+"name": "fascinating_book_mint",
+"writable": true
 }, {
 "name": "scientist_authority",
 "pda": {
@@ -114,7 +294,10 @@ idl = {
 "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
 "name": "token_program"
 }],
-"args": [],
+"args": [{
+"name": "book_type",
+"type": "u8"
+}],
 "discriminator": [165.0, 16.0, 3.0, 152.0, 203.0, 245.0, 83.0, 89.0],
 "name": "research"
 }],
@@ -123,7 +306,32 @@ idl = {
 "name": "solana_science",
 "spec": "0.1.0",
 "version": "0.1.0"
+},
+"types": [{
+"name": "GameAccount",
+"type": {
+"fields": [{
+"name": "sale_book",
+"type": "pubkey"
+}, {
+"name": "seller",
+"type": "pubkey"
+}, {
+"name": "highest_bidder",
+"type": "pubkey"
+}, {
+"name": "highest_bid",
+"type": "u64"
+}],
+"kind": "struct"
 }
+}]
 }
 
 [node name="Transaction" type="Transaction" parent="."]
+
+[node name="Transaction2" type="Transaction" parent="."]
+
+[node name="BookTransaction" type="Transaction" parent="."]
+
+[node name="Transaction3" type="Transaction" parent="."]

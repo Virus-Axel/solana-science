@@ -1,0 +1,82 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2rmh57p1mrr4"]
+
+[ext_resource type="Script" path="res://UI.gd" id="1_l1uqb"]
+
+[node name="Ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l1uqb")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 126.0
+offset_right = 139.0
+offset_bottom = 149.0
+text = "For Sale: "
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 150.0
+offset_right = 116.0
+offset_bottom = 173.0
+text = "Price: "
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 181.0
+offset_right = 153.0
+offset_bottom = 222.0
+text = "Bid "
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 699.0
+offset_top = 109.0
+offset_right = 764.0
+offset_bottom = 147.0
+text = "Cash: "
+
+[node name="Label4" type="Label" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 17.0
+offset_right = 424.0
+offset_bottom = 40.0
+text = "Ideas: "
+
+[node name="Label5" type="Label" parent="."]
+layout_mode = 0
+offset_left = 326.0
+offset_top = 376.0
+offset_right = 420.0
+offset_bottom = 399.0
+text = "Book score: "
+
+[node name="ItemList" type="ItemList" parent="."]
+layout_mode = 0
+offset_left = 633.0
+offset_top = 300.0
+offset_right = 952.0
+offset_bottom = 394.0
+item_count = 3
+item_0/text = "Published Decent Books: "
+item_1/text = "Published Interesting Books: "
+item_2/text = "Published Fascinating Books: "
+
+[node name="SolanaClient" type="SolanaClient" parent="."]
+
+[node name="Label6" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 356.0
+offset_top = 223.0
+offset_right = 480.0
+offset_bottom = 246.0
+text = "Network Error..."

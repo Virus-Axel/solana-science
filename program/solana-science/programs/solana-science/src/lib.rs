@@ -44,8 +44,10 @@ const EXPERIENCE_FIELD: &str = "Experience";
 const PUBLISHED_DECENT_BOOKS: &str = "Published Decent Books";
 const PUBLISHED_INTERESING_BOOKS: &str = "Published Interesting Books";
 const PUBLISHED_FASCINATING_BOOKS: &str = "Published Fascinating Books";
+const CASH_FIELD: &str = "Cash";
 
 struct CustomData {
+    pub cash: u64,
     pub next_timestamp: i64,
     pub current_book: Pubkey,
     pub book_score: u64,
@@ -131,23 +133,26 @@ fn get_custom_data<'info>(scientist_mint: AccountInfo<'info>) -> CustomData {
     let mut strings = Vec::new();
     while i < data.len() {
         let key_size = u32::from_le_bytes(data[i..(i + 4)].try_into().unwrap()) as usize;
+        msg!("key_size: {}", key_size);
         i += 4 + key_size;
         let value_size = u32::from_le_bytes(data[i..(i + 4)].try_into().unwrap()) as usize;
         i += 4;
         let value_string = String::from_utf8(data[i..(i + value_size)].to_vec()).unwrap();
+        msg!("value string: {}", value_string);
         i += value_size;
 
         strings.push(value_string);
     }
 
     CustomData {
-        next_timestamp: strings[0].parse::<i64>().unwrap(),
-        current_book: Pubkey::from_str(strings[1].as_str()).unwrap(),
-        book_score: strings[2].parse::<u64>().unwrap(),
-        experience: strings[3].parse::<f64>().unwrap(),
-        published_decent_books: strings[4].parse::<u64>().unwrap(),
-        published_interesting_books: strings[5].parse::<u64>().unwrap(),
-        published_fascinating_books: strings[6].parse::<u64>().unwrap(),
+        cash: strings[0].parse::<u64>().unwrap(),
+        next_timestamp: strings[1].parse::<i64>().unwrap(),
+        current_book: Pubkey::from_str(strings[2].as_str()).unwrap(),
+        book_score: strings[3].parse::<u64>().unwrap(),
+        experience: strings[4].parse::<f64>().unwrap(),
+        published_decent_books: strings[5].parse::<u64>().unwrap(),
+        published_interesting_books: strings[6].parse::<u64>().unwrap(),
+        published_fascinating_books: strings[7].parse::<u64>().unwrap(),
     }
 }
 
@@ -254,6 +259,20 @@ pub mod solana_science {
             "name1".to_string(),
             "symbol1".to_string(),
             "http://uri1.se".to_string(),
+        )?;
+
+        token_metadata_update_field(
+            CpiContext::new(
+                ctx.accounts.token_program.to_account_info(),
+                TokenMetadataUpdateField {
+                    token_program_id: ctx.accounts.token_program.to_account_info(),
+                    metadata: ctx.accounts.scientist_mint.to_account_info(),
+                    update_authority: ctx.accounts.scientist_authority.to_account_info(),
+                },
+            )
+            .with_signer(signer_seeds),
+            Field::Key(CASH_FIELD.to_string()),
+            1000.to_string(),
         )?;
 
         Ok(())
@@ -501,6 +520,7 @@ pub mod solana_science {
     }
 
     pub fn publish_book(ctx: Context<PublishBook>) -> Result<()> {
+
         let research_time = get_research_time(ctx.accounts.scientist_mint.to_account_info());
         let custom_data = get_custom_data(ctx.accounts.scientist_mint.to_account_info());
 
@@ -537,26 +557,48 @@ pub mod solana_science {
             payout_book_mint = ctx.accounts.fascinating_book_mint.to_account_info();
         }
         else{
-            msg!("First publish!");
             ctx.accounts.game_account.sale_book = book_mint;
             ctx.accounts.game_account.seller = token_acc;
+            ctx.accounts.game_account.seller_scientist = ctx.accounts.scientist_mint.key();
             ctx.accounts.game_account.highest_bid = 200;
+
             return Ok(());
         }
 
-        mint_to(CpiContext::new(
-            ctx.accounts.token_program.to_account_info(),
-            MintTo{
-                mint: payout_book_mint,
-                to: ctx.accounts.highest_bidder.to_account_info(),
-                authority: ctx.accounts.scientist_authority.to_account_info(),
-            }
-        ), 1)?;
+        let bump = ctx.bumps.scientist_authority;
+        let signer_seeds: &[&[&[u8]]] = &[&[AUTHORITY_SEED, &[bump]]];
+
+        if ctx.accounts.game_account.highest_bid > 200{
+            mint_to(CpiContext::new(
+                ctx.accounts.token_program.to_account_info(),
+                MintTo{
+                    mint: payout_book_mint,
+                    to: ctx.accounts.highest_bidder.to_account_info(),
+                    authority: ctx.accounts.scientist_authority.to_account_info(),
+                }
+            ).with_signer(signer_seeds), 1)?;
+        }
+
+        let seller_custom_data = get_custom_data(ctx.accounts.previous_seller_scientist.to_account_info());
 
         // MINT SCIENCE TOKENS HERE
+        token_metadata_update_field(
+            CpiContext::new(
+                ctx.accounts.token_program.to_account_info(),
+                TokenMetadataUpdateField {
+                    token_program_id: ctx.accounts.token_program.to_account_info(),
+                    metadata: ctx.accounts.previous_seller_scientist.to_account_info(),
+                    update_authority: ctx.accounts.scientist_authority.to_account_info(),
+                },
+            )
+            .with_signer(signer_seeds),
+            Field::Key(CASH_FIELD.to_string()),
+            (seller_custom_data.cash + ctx.accounts.game_account.highest_bid).to_string(),
+        )?;
 
         ctx.accounts.game_account.sale_book = book_mint;
         ctx.accounts.game_account.seller = token_acc;
+        ctx.accounts.game_account.seller_scientist = ctx.accounts.scientist_mint.key();
         ctx.accounts.game_account.highest_bid = 200;
 
         Ok(())
@@ -580,8 +622,51 @@ pub mod solana_science {
         else{
             return err!(ScienceError::OutdatedBid);
         }
+
+        let bump = ctx.bumps.scientist_authority;
+        let signer_seeds: &[&[&[u8]]] = &[&[AUTHORITY_SEED, &[bump]]];
+
+        if ctx.accounts.game_account.highest_bid > 200 {
+            let previous_bidder_custom_data = get_custom_data(ctx.accounts.previous_bidder.to_account_info());
+
+            token_metadata_update_field(
+                CpiContext::new(
+                    ctx.accounts.token_program.to_account_info(),
+                    TokenMetadataUpdateField {
+                        token_program_id: ctx.accounts.token_program.to_account_info(),
+                        metadata: ctx.accounts.previous_bidder.to_account_info(),
+                        update_authority: ctx.accounts.scientist_authority.to_account_info(),
+                    },
+                )
+                .with_signer(signer_seeds),
+                Field::Key(CASH_FIELD.to_string()),
+                (previous_bidder_custom_data.cash + ctx.accounts.game_account.highest_bid).to_string(),
+            )?;
+        }
+
         ctx.accounts.game_account.highest_bidder = book_token_acc;
+        ctx.accounts.game_account.highest_bidder_scientist = ctx.accounts.scientist_mint.key();
         ctx.accounts.game_account.highest_bid += BID_INCREASE;
+
+        let custom_data = get_custom_data(ctx.accounts.scientist_mint.to_account_info());
+
+        if custom_data.cash < ctx.accounts.game_account.highest_bid{
+            return err!(ScienceError::OutdatedBid);
+        }
+
+        token_metadata_update_field(
+            CpiContext::new(
+                ctx.accounts.token_program.to_account_info(),
+                TokenMetadataUpdateField {
+                    token_program_id: ctx.accounts.token_program.to_account_info(),
+                    metadata: ctx.accounts.scientist_mint.to_account_info(),
+                    update_authority: ctx.accounts.scientist_authority.to_account_info(),
+                },
+            )
+            .with_signer(signer_seeds),
+            Field::Key(CASH_FIELD.to_string()),
+            (custom_data.cash - ctx.accounts.game_account.highest_bid).to_string(),
+        )?;
 
         Ok(())
     }
@@ -730,7 +815,7 @@ pub struct PublishBook<'info> {
     #[account(mut, signer)]
     pub owner: Signer<'info>,
 
-    #[account(init_if_needed, payer = owner, space = 112, seeds = [GAME_ACCOUNT_SEED], bump)]
+    #[account(init_if_needed, payer = owner, space = 176, seeds = [GAME_ACCOUNT_SEED], bump)]
     pub game_account: Account<'info, GameAccount>,
 
     /// CHECK:
@@ -761,9 +846,10 @@ pub struct PublishBook<'info> {
     /// CHECK: 
     #[account(mut)]
     pub highest_bidder: UncheckedAccount<'info>,
+
     /// CHECK: 
     #[account(mut)]
-    pub previous_seller: UncheckedAccount<'info>,
+    pub previous_seller_scientist: UncheckedAccount<'info>,
 
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, Token2022>,
@@ -774,7 +860,7 @@ pub struct PlaceBid<'info> {
     #[account(mut, signer)]
     pub owner: Signer<'info>,
 
-    #[account(seeds = [GAME_ACCOUNT_SEED], bump)]
+    #[account(mut, seeds = [GAME_ACCOUNT_SEED], bump)]
     pub game_account: Account<'info, GameAccount>,
 
     /// CHECK:
@@ -801,12 +887,20 @@ pub struct PlaceBid<'info> {
     /// CHECK: PDA Mint authority
     #[account(mut, seeds = [AUTHORITY_SEED], bump)]
     pub scientist_authority: UncheckedAccount<'info>,
+
+    /// CHECK: 
+    #[account(mut)]
+    pub previous_bidder: UncheckedAccount<'info>,
+
+    pub token_program: Program<'info, Token2022>,
 }
 
 #[account]
 pub struct GameAccount {
     pub sale_book: Pubkey,
     pub seller: Pubkey,
+    pub seller_scientist: Pubkey,
     pub highest_bidder: Pubkey,
+    pub highest_bidder_scientist: Pubkey,
     highest_bid: u64,
 }

@@ -1,10 +1,23 @@
 extends Control
 
 var PID = "Bp7LbjQdrAGGQft9TyJYiGvmKP6NzHZvvD35wiW12FMQ"
-var scientist = "9Uz7mm73FaCq3UNSxD8zUSm2a7xekWW7BW8TSpUgGNW"
+var scientist = "5pnJmbAtTj6sBmEFttUyYLnpHMUdLubTM3fnstLxZX2j"
+var payer;
 
 const TIME_TO_READ_BOOK = 120
-const TIME_PER_IDEA = 3600.0
+const TIME_PER_IDEA = 5.0
+
+var UI_bid = 0
+
+func update_books():
+	var balances = await $Control.get_token_balances()
+
+	if balances[0] is int:
+		set_decent_books(balances[0])
+	if balances[1] is int:
+		set_interesting_books(balances[1])
+	if balances[2] is int:
+		set_fascinating_books(balances[2])
 
 func calculate_ideas(custom_data) -> int:
 	var total_books = int(custom_data["Published Decent Books"]) + int(custom_data["Published Interesting Books"]) + int(custom_data["Published Fascinating Books"])
@@ -54,44 +67,36 @@ func set_sale_item(item: Pubkey):
 func set_item_price(price: int):
 	$Label2.text = "Price: " + str(price)
 	$Button.text = "Bid " + str(price + 100)
+	UI_bid = price + 100
 
 func show_network_error():
 	$Label6.visible = true
+	
+func set_cash(cash: int):
+	$Label3.text = "Cash: " + str(cash)
+
+func set_decent_books(amount: int):
+	$Label7.text = "Decent Books: " + str(amount)
+
+func set_interesting_books(amount: int):
+	$Label8.text = "Interesting Books: " + str(amount)
+
+func set_fascinating_books(amount: int):
+	$Label9.text = "Fascinating Books: " + str(amount)
+
 
 func update_ui():
-	var game_account: Pubkey = Pubkey.new_pda(["SOLANA_SCIENCE_GAME_ACCOUNT"], Pubkey.new_from_string(PID))
-	$SolanaClient.get_account_info(game_account.to_string())
 
-	var response = await($SolanaClient.http_response_received)
-	print(response)
-	if not response.has("result"):
-		show_network_error()
-		return
+	var game_data = await $Control.get_game_account()
 	
-	if not response["result"].has("value"):
-		show_network_error()
-		return
+	print("Highest Bidder: ", game_data["highest_bidder"].to_string())
 	
-	if response["result"]["value"] == null:
-		show_network_error()
-		return
-	
-	var encoded_data = response["result"]["value"]["data"][0]
-	var decoded_data = SolanaUtils.bs64_decode(encoded_data)
-	
-	var sale_book = Pubkey.new_from_bytes(decoded_data.slice(8, 40))
-	var seller = Pubkey.new_from_bytes(decoded_data.slice(40, 72))
-	var highest_bidder = Pubkey.new_from_bytes(decoded_data.slice(72, 104))
-	var highest_bid = decoded_data.decode_u64(104)
-	
-	set_sale_item(sale_book)
-	set_item_price(highest_bid)
-	
-	print(decoded_data)
+	set_sale_item(game_data["sale_book"])
+	set_item_price(game_data["highest_bid"])
 	
 	$SolanaClient.get_account_info(scientist)
 
-	response = await($SolanaClient.http_response_received)
+	var response = await($SolanaClient.http_response_received)
 
 	if not response.has("result"):
 		show_network_error()
@@ -105,8 +110,8 @@ func update_ui():
 		show_network_error()
 		return
 		
-	encoded_data = response["result"]["value"]["data"][0]
-	decoded_data = SolanaUtils.bs64_decode(encoded_data)
+	var encoded_data = response["result"]["value"]["data"][0]
+	var decoded_data = SolanaUtils.bs64_decode(encoded_data)
 	var custom_data = parse_custom_data(decoded_data)
 	
 	set_published_decent(int(custom_data["Published Decent Books"]))
@@ -116,14 +121,56 @@ func update_ui():
 	set_book_score(float(custom_data["Book Score"]))
 	var ideas = calculate_ideas(custom_data)
 	set_ideas(ideas)
+	set_cash(int(custom_data["Cash"]))
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	update_ui()
+	await $Control.init()
+	
+	scientist = $Control.mint_keypair.get_public_string()
+	$SolanaClient.account_subscribe($Control.decent_book_keypair, Callable(self, "decent_book_callback"))
+	$SolanaClient.account_subscribe($Control.interesting_book_keypair, Callable(self, "interesting_book_callback"))
+	$SolanaClient.account_subscribe($Control.fascinating_book_keypair, Callable(self, "fascinating_book_callback"))
+	
+	await update_ui()
+	update_books()
 	pass # Replace with function body.
+
+
+func decent_book_callback(param):
+	var ata = Pubkey.new_associated_token_address($Control.payer, $Control.decent_book_keypair)
+	var amount = await $Control.get_token_balance(ata)
+	if amount is int:
+		set_decent_books(amount)
+
+
+func interesting_book_callback(params):
+	var ata = Pubkey.new_associated_token_address($Control.payer, $Control.interesting_book_keypair)
+	var amount = await $Control.get_token_balance(ata)
+	if amount is int:
+		set_interesting_books(amount)
+
+func fascinating_book_callback(params):
+	var ata = Pubkey.new_associated_token_address($Control.payer, $Control.fascinating_book_keypair)
+	var amount = await $Control.get_token_balance(ata)
+	if amount is int:
+		set_fascinating_books(amount)
 
 
 # Called everPublished Interesting Books: y frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+	
+
+func _on_button_2_pressed():
+	await update_ui()
+	update_books()
+
+func _exit_tree():
+	$SolanaClient.unsubscribe_all(Callable(self, "decent_book_callback"))
+
+
+func place_bid():
+	await $Control.place_bid(UI_bid)
+	pass # Replace with function body.

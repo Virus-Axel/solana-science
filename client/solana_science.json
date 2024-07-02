@@ -615,6 +615,150 @@
 			"args": []
 		},
 		{
+			"name": "place_bid",
+			"discriminator": [
+				238,
+				77,
+				148,
+				91,
+				200,
+				151,
+				92,
+				146
+			],
+			"accounts": [
+				{
+					"name": "owner",
+					"writable": true,
+					"signer": true
+				},
+				{
+					"name": "game_account",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [
+									83,
+									79,
+									76,
+									65,
+									78,
+									65,
+									95,
+									83,
+									67,
+									73,
+									69,
+									78,
+									67,
+									69,
+									95,
+									71,
+									65,
+									77,
+									69,
+									95,
+									65,
+									67,
+									67,
+									79,
+									85,
+									78,
+									84
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "decent_book_account",
+					"writable": true
+				},
+				{
+					"name": "interesting_book_account",
+					"writable": true
+				},
+				{
+					"name": "fascinating_book_account",
+					"writable": true
+				},
+				{
+					"name": "scientist_mint",
+					"writable": true
+				},
+				{
+					"name": "decent_book_mint",
+					"writable": true
+				},
+				{
+					"name": "interesting_book_mint",
+					"writable": true
+				},
+				{
+					"name": "fascinating_book_mint",
+					"writable": true
+				},
+				{
+					"name": "scientist_authority",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [
+									83,
+									79,
+									76,
+									65,
+									78,
+									65,
+									95,
+									83,
+									67,
+									73,
+									69,
+									78,
+									67,
+									69,
+									95,
+									65,
+									85,
+									84,
+									72,
+									79,
+									82,
+									73,
+									84,
+									89,
+									95,
+									83,
+									69,
+									69,
+									68
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "previous_bidder",
+					"writable": true
+				},
+				{
+					"name": "token_program",
+					"address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+				}
+			],
+			"args": [
+				{
+					"name": "bid",
+					"type": "u64"
+				}
+			]
+		},
+		{
 			"name": "publish_book",
 			"discriminator": [
 				216,
@@ -743,7 +887,11 @@
 					}
 				},
 				{
-					"name": "previous_seller",
+					"name": "highest_bidder",
+					"writable": true
+				},
+				{
+					"name": "previous_seller_scientist",
 					"writable": true
 				},
 				{
@@ -877,6 +1025,11 @@
 			"code": 6000,
 			"name": "BusyScientist",
 			"msg": "Scientist is busy"
+		},
+		{
+			"code": 6001,
+			"name": "OutdatedBid",
+			"msg": "Another bidder was quicker, try again"
 		}
 	],
 	"types": [
@@ -894,7 +1047,15 @@
 						"type": "pubkey"
 					},
 					{
+						"name": "seller_scientist",
+						"type": "pubkey"
+					},
+					{
 						"name": "highest_bidder",
+						"type": "pubkey"
+					},
+					{
+						"name": "highest_bidder_scientist",
 						"type": "pubkey"
 					},
 					{

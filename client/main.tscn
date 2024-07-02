@@ -25,6 +25,10 @@ idl = {
 "code": 6000.0,
 "msg": "Scientist is busy",
 "name": "BusyScientist"
+}, {
+"code": 6001.0,
+"msg": "Another bidder was quicker, try again",
+"name": "OutdatedBid"
 }],
 "instructions": [{
 "accounts": [{
@@ -244,7 +248,67 @@ idl = {
 },
 "writable": true
 }, {
-"name": "previous_seller",
+"name": "previous_bidder",
+"writable": true
+}, {
+"address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+"name": "token_program"
+}],
+"args": [{
+"name": "bid",
+"type": "u64"
+}],
+"discriminator": [238.0, 77.0, 148.0, 91.0, 200.0, 151.0, 92.0, 146.0],
+"name": "place_bid"
+}, {
+"accounts": [{
+"name": "owner",
+"signer": true,
+"writable": true
+}, {
+"name": "game_account",
+"pda": {
+"seeds": [{
+"kind": "const",
+"value": [83.0, 79.0, 76.0, 65.0, 78.0, 65.0, 95.0, 83.0, 67.0, 73.0, 69.0, 78.0, 67.0, 69.0, 95.0, 71.0, 65.0, 77.0, 69.0, 95.0, 65.0, 67.0, 67.0, 79.0, 85.0, 78.0, 84.0]
+}]
+},
+"writable": true
+}, {
+"name": "decent_book_account",
+"writable": true
+}, {
+"name": "interesting_book_account",
+"writable": true
+}, {
+"name": "fascinating_book_account",
+"writable": true
+}, {
+"name": "scientist_mint",
+"writable": true
+}, {
+"name": "decent_book_mint",
+"writable": true
+}, {
+"name": "interesting_book_mint",
+"writable": true
+}, {
+"name": "fascinating_book_mint",
+"writable": true
+}, {
+"name": "scientist_authority",
+"pda": {
+"seeds": [{
+"kind": "const",
+"value": [83.0, 79.0, 76.0, 65.0, 78.0, 65.0, 95.0, 83.0, 67.0, 73.0, 69.0, 78.0, 67.0, 69.0, 95.0, 65.0, 85.0, 84.0, 72.0, 79.0, 82.0, 73.0, 84.0, 89.0, 95.0, 83.0, 69.0, 69.0, 68.0]
+}]
+},
+"writable": true
+}, {
+"name": "highest_bidder",
+"writable": true
+}, {
+"name": "previous_seller_scientist",
 "writable": true
 }, {
 "address": "11111111111111111111111111111111",
@@ -317,7 +381,13 @@ idl = {
 "name": "seller",
 "type": "pubkey"
 }, {
+"name": "seller_scientist",
+"type": "pubkey"
+}, {
 "name": "highest_bidder",
+"type": "pubkey"
+}, {
+"name": "highest_bidder_scientist",
 "type": "pubkey"
 }, {
 "name": "highest_bid",
@@ -335,3 +405,5 @@ idl = {
 [node name="BookTransaction" type="Transaction" parent="."]
 
 [node name="Transaction3" type="Transaction" parent="."]
+
+[node name="SolanaClient" type="SolanaClient" parent="."]

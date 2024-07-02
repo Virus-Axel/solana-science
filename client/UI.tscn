@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2rmh57p1mrr4"]
+[gd_scene load_steps=3 format=3 uid="uid://d2rmh57p1mrr4"]
 
 [ext_resource type="Script" path="res://UI.gd" id="1_l1uqb"]
+[ext_resource type="PackedScene" uid="uid://c76kioxt2ivp4" path="res://main.tscn" id="2_unkvn"]
 
 [node name="Ui" type="Control"]
 layout_mode = 3
@@ -53,10 +54,10 @@ text = "Ideas: "
 
 [node name="Label5" type="Label" parent="."]
 layout_mode = 0
-offset_left = 326.0
-offset_top = 376.0
-offset_right = 420.0
-offset_bottom = 399.0
+offset_left = 359.0
+offset_top = 293.0
+offset_right = 453.0
+offset_bottom = 316.0
 text = "Book score: "
 
 [node name="ItemList" type="ItemList" parent="."]
@@ -80,3 +81,70 @@ offset_top = 223.0
 offset_right = 480.0
 offset_bottom = 246.0
 text = "Network Error..."
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 728.0
+offset_top = 454.0
+offset_right = 825.0
+offset_bottom = 508.0
+text = "Refresh"
+
+[node name="Button3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 973.0
+offset_top = 302.0
+offset_right = 1062.0
+offset_bottom = 334.0
+text = "Publish"
+
+[node name="Button4" type="Button" parent="."]
+layout_mode = 0
+offset_left = 974.0
+offset_top = 335.0
+offset_right = 1063.0
+offset_bottom = 367.0
+text = "Publish"
+
+[node name="Button5" type="Button" parent="."]
+layout_mode = 0
+offset_left = 973.0
+offset_top = 369.0
+offset_right = 1062.0
+offset_bottom = 401.0
+text = "Publish"
+
+[node name="Label7" type="Label" parent="."]
+layout_mode = 0
+offset_left = 316.0
+offset_top = 386.0
+offset_right = 431.0
+offset_bottom = 409.0
+text = "Decent Books: "
+
+[node name="Control" parent="." instance=ExtResource("2_unkvn")]
+layout_mode = 1
+offset_left = -2.0
+offset_top = 622.0
+offset_right = -2.0
+offset_bottom = 622.0
+
+[node name="Label8" type="Label" parent="."]
+layout_mode = 0
+offset_left = 310.0
+offset_top = 420.0
+offset_right = 455.0
+offset_bottom = 443.0
+text = "Interesting Books: "
+
+[node name="Label9" type="Label" parent="."]
+layout_mode = 0
+offset_left = 307.0
+offset_top = 457.0
+offset_right = 455.0
+offset_bottom = 480.0
+text = "Fascinating Books: "
+
+[connection signal="pressed" from="Button" to="." method="place_bid"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Button3" to="Control" method="publish_book"]

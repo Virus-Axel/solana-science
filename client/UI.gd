@@ -5,7 +5,7 @@ var scientist = "5pnJmbAtTj6sBmEFttUyYLnpHMUdLubTM3fnstLxZX2j"
 var payer;
 
 const TIME_TO_READ_BOOK = 120
-const TIME_PER_IDEA = 5.0
+const TIME_PER_IDEA = 30.0
 
 var UI_bid = 0
 
@@ -47,7 +47,7 @@ func parse_custom_data(data: PackedByteArray) -> Dictionary:
 	return ret
 
 func set_ideas(ideas: int):
-	$Label4.text = "Ideas: " + str(ideas)
+	$Panel/Label.text = str(ideas)
 
 func set_book_score(score: int):
 	$Label5.text = "Book Score: " + str(score)
@@ -63,6 +63,7 @@ func set_published_fascinating(amount: int):
 
 func set_sale_item(item: Pubkey):
 	$Label.text = "For Sale: " + item.to_string()
+	$BookIconPicker.set_icon(item)
 
 func set_item_price(price: int):
 	$Label2.text = "Price: " + str(price)
@@ -123,9 +124,12 @@ func update_ui():
 	set_ideas(ideas)
 	set_cash(int(custom_data["Cash"]))
 
+func play_read():
+	$Button7/AnimationPlayer.play("scale")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	play_read()
 	await $Control.init()
 	
 	scientist = $Control.mint_keypair.get_public_string()

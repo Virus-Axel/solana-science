@@ -1,7 +1,56 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2rmh57p1mrr4"]
+[gd_scene load_steps=10 format=3 uid="uid://d2rmh57p1mrr4"]
 
 [ext_resource type="Script" path="res://UI.gd" id="1_l1uqb"]
 [ext_resource type="PackedScene" uid="uid://c76kioxt2ivp4" path="res://main.tscn" id="2_unkvn"]
+[ext_resource type="PackedScene" uid="uid://b5byi6jqnrq7m" path="res://book_icon_picker.tscn" id="3_26v30"]
+[ext_resource type="Texture2D" uid="uid://jfnonurgilvs" path="res://icons/light.png" id="4_qks04"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ash0m"]
+bg_color = Color(0.98436, 0.88275, 0.415717, 1)
+border_color = Color(0.603922, 0.305882, 0.411765, 1)
+corner_radius_top_left = 35
+corner_radius_top_right = 10
+corner_radius_bottom_right = 35
+corner_radius_bottom_left = 10
+
+[sub_resource type="Animation" id="Animation_ybl4x"]
+resource_name = "scale"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.9, 0.9), Vector2(1.1, 1.1)]
+}
+
+[sub_resource type="Animation" id="Animation_ibypg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aafti"]
+_data = {
+"RESET": SubResource("Animation_ibypg"),
+"scale": SubResource("Animation_ybl4x")
+}
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1n1vo"]
 
 [node name="Ui" type="Control"]
 layout_mode = 3
@@ -144,6 +193,188 @@ offset_top = 457.0
 offset_right = 455.0
 offset_bottom = 480.0
 text = "Fascinating Books: "
+
+[node name="Button6" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 123.0
+offset_top = -115.0
+offset_right = 266.0
+offset_bottom = -46.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_ash0m")
+
+[node name="Label2" type="Label" parent="Button6"]
+layout_mode = 2
+offset_left = 33.0
+offset_top = -5.94501
+offset_right = 120.0
+offset_bottom = 64.055
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 21
+theme_override_font_sizes/font_size = 34
+text = "Place"
+
+[node name="Label3" type="Label" parent="Button6"]
+layout_mode = 2
+offset_left = 22.0
+offset_top = 22.055
+offset_right = 102.0
+offset_bottom = 92.055
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 23
+theme_override_font_sizes/font_size = 31
+text = "Bid"
+
+[node name="Button7" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -197.0
+offset_top = -120.0
+offset_right = -54.0
+offset_bottom = -51.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset = Vector2(71, 34)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_ash0m")
+
+[node name="Label2" type="Label" parent="Button7"]
+layout_mode = 2
+offset_left = 33.0
+offset_top = -5.94501
+offset_right = 120.0
+offset_bottom = 64.055
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 21
+theme_override_font_sizes/font_size = 34
+text = "Read"
+
+[node name="Label3" type="Label" parent="Button7"]
+layout_mode = 2
+offset_left = 22.0
+offset_top = 22.055
+offset_right = 102.0
+offset_bottom = 92.055
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 23
+theme_override_font_sizes/font_size = 31
+text = "Book"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Button7"]
+libraries = {
+"": SubResource("AnimationLibrary_aafti")
+}
+
+[node name="BookIconPicker" parent="." instance=ExtResource("3_26v30")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = -125.0
+offset_right = 113.843
+offset_bottom = -25.0
+grow_vertical = 0
+
+[node name="Panel" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -185.0
+offset_top = -132.0
+offset_right = 215.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+texture = ExtResource("4_qks04")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 11
+theme_override_constants/shadow_outline_size = 31
+theme_override_font_sizes/font_size = 51
+
+[node name="VSeparator" type="VSeparator" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxEmpty_1n1vo")
+
+[node name="Button8" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(180, 69)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_ash0m")
+
+[node name="Label2" type="Label" parent="Panel/Button8"]
+layout_mode = 2
+offset_left = 33.0
+offset_top = -5.94501
+offset_right = 120.0
+offset_bottom = 64.055
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 21
+theme_override_font_sizes/font_size = 34
+text = "Publish"
+
+[node name="Label3" type="Label" parent="Panel/Button8"]
+layout_mode = 2
+offset_left = 22.0
+offset_top = 22.055
+offset_right = 102.0
+offset_bottom = 92.055
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 23
+theme_override_font_sizes/font_size = 31
+text = "Book"
 
 [connection signal="pressed" from="Button" to="." method="place_bid"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

@@ -531,20 +531,44 @@ pub mod solana_science {
         // TODO: Check for ideas first.
 
         const LOWER: u64 = BOOK_SCORE_LEVEL_1 + 1;
-        let (book_mint, token_acc) = match custom_data.book_score {
+        let (book_mint, token_acc, field, currest_amount) = match custom_data.book_score {
             0..=BOOK_SCORE_LEVEL_1 => (
                 ctx.accounts.decent_book_mint.key(),
                 ctx.accounts.decent_book_account.key(),
+                PUBLISHED_DECENT_BOOKS,
+                custom_data.published_decent_books,
             ),
             LOWER..=BOOK_SCORE_LEVEL_2 => (
                 ctx.accounts.interesting_book_mint.key(),
                 ctx.accounts.interesting_book_account.key(),
+                PUBLISHED_INTERESING_BOOKS,
+                custom_data.published_interesting_books,
             ),
             _ => (
                 ctx.accounts.fascinating_book_mint.key(),
                 ctx.accounts.fascinating_book_account.key(),
+                PUBLISHED_FASCINATING_BOOKS,
+                custom_data.published_fascinating_books,
             ),
         };
+
+        let bump = ctx.bumps.scientist_authority;
+        let signer_seeds: &[&[&[u8]]] = &[&[AUTHORITY_SEED, &[bump]]];
+
+        // Update publish counter.
+        token_metadata_update_field(
+            CpiContext::new(
+                ctx.accounts.token_program.to_account_info(),
+                TokenMetadataUpdateField {
+                    token_program_id: ctx.accounts.token_program.to_account_info(),
+                    metadata: ctx.accounts.scientist_mint.to_account_info(),
+                    update_authority: ctx.accounts.scientist_authority.to_account_info(),
+                },
+            )
+            .with_signer(signer_seeds),
+            Field::Key(field.to_string()),
+            (currest_amount + 1).to_string(),
+        )?;
 
         let payout_book_mint;
         if ctx.accounts.game_account.sale_book == ctx.accounts.decent_book_mint.key(){
@@ -564,9 +588,6 @@ pub mod solana_science {
 
             return Ok(());
         }
-
-        let bump = ctx.bumps.scientist_authority;
-        let signer_seeds: &[&[&[u8]]] = &[&[AUTHORITY_SEED, &[bump]]];
 
         if ctx.accounts.game_account.highest_bid > 200{
             mint_to(CpiContext::new(

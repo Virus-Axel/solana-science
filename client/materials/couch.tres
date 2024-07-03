@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cg0hancnv87s6"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kn70f"]
+frequency = 0.3466
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hmhrm"]
+in_3d_space = true
+seamless_blend_skirt = 0.021
+as_normal_map = true
+noise = SubResource("FastNoiseLite_kn70f")
+
+[resource]
+albedo_color = Color(1, 0.262821, 0.309712, 1)
+normal_enabled = true
+normal_scale = 1.98
+normal_texture = SubResource("NoiseTexture2D_hmhrm")
+uv1_triplanar = true

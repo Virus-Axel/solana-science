@@ -1,0 +1,111 @@
+[gd_scene load_steps=7 format=3 uid="uid://bwq5uuie4b8ni"]
+
+[ext_resource type="Material" uid="uid://0u76wuntn8io" path="res://materials/beard.tres" id="2_2fkm2"]
+[ext_resource type="PackedScene" uid="uid://bqwqwcmvupquc" path="res://models/scientist.glb" id="2_sjo0i"]
+[ext_resource type="Material" uid="uid://cg0hancnv87s6" path="res://materials/couch.tres" id="2_ywwxf"]
+[ext_resource type="Material" uid="uid://2hecwidq6ch6" path="res://materials/jeans.tres" id="3_sktis"]
+[ext_resource type="Material" uid="uid://5stxe8f78txa" path="res://materials/wook.tres" id="5_untbb"]
+
+[sub_resource type="Environment" id="Environment_epe23"]
+background_energy_multiplier = 0.0
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.83895)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.7591, -2.00521, -4.92802)
+omni_range = 2.612
+omni_attenuation = 2.46229
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.7591, -2.13049, -2.8675)
+light_energy = 0.55
+omni_range = 2.766
+omni_attenuation = 2.37841
+
+[node name="scientist" parent="." instance=ExtResource("2_sjo0i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.70369, 0, -5.39028)
+
+[node name="Light" parent="scientist" index="0"]
+visible = false
+
+[node name="Skeleton3D" parent="scientist/Armature" index="0"]
+bones/0/rotation = Quaternion(0.409512, 2.1751e-07, 9.76351e-08, 0.912305)
+bones/1/rotation = Quaternion(-0.407337, -1.08871e-07, -1.45675e-07, 0.913278)
+bones/2/rotation = Quaternion(0.0124639, -3.88175e-14, 2.97163e-09, 0.999922)
+bones/4/rotation = Quaternion(0.287631, -0.144201, 0.872132, 0.368593)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/rotation = Quaternion(0.0736165, -0.0446148, 0.290364, 0.953037)
+bones/6/rotation = Quaternion(0.552119, -0.0655838, -0.492205, 0.669774)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/rotation = Quaternion(-0.00681448, 2.90549e-07, -0.153902, 0.988063)
+bones/8/rotation = Quaternion(0.0117498, 2.48269e-07, 0.265364, 0.964077)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/rotation = Quaternion(-0.344469, -0.120676, 0.831846, -0.418104)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/rotation = Quaternion(0.0892703, 0.430691, -0.328722, 0.83575)
+bones/11/rotation = Quaternion(0.600584, -0.405581, 0.506621, 0.467052)
+bones/11/scale = Vector3(1, 1, 1)
+bones/12/rotation = Quaternion(-0.00740192, -1.7204e-07, 0.169069, 0.985576)
+bones/12/scale = Vector3(1, 1, 1)
+bones/13/rotation = Quaternion(0.01182, 3.13168e-08, -0.269982, 0.962793)
+bones/13/scale = Vector3(1, 1, 1)
+bones/14/rotation = Quaternion(0.342366, 0.0679094, -0.182548, 0.919157)
+bones/14/scale = Vector3(1, 1, 1)
+bones/15/rotation = Quaternion(0.678424, 0.134773, 0.140612, 0.708382)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/rotation = Quaternion(0.340135, -0.00741802, 0.181663, 0.922633)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/rotation = Quaternion(0.693002, -0.149513, -0.0133101, 0.705136)
+
+[node name="Cube_001" parent="scientist/Armature/Skeleton3D" index="1"]
+surface_material_override/0 = ExtResource("2_2fkm2")
+
+[node name="Cylinder_006" parent="scientist/Armature/Skeleton3D" index="13"]
+surface_material_override/0 = ExtResource("2_2fkm2")
+
+[node name="Cylinder_009" parent="scientist/Armature/Skeleton3D" index="15"]
+surface_material_override/0 = ExtResource("3_sktis")
+
+[node name="Cube_007" parent="scientist" index="3"]
+surface_material_override/0 = ExtResource("2_ywwxf")
+
+[node name="Cylinder_008" parent="scientist" index="4"]
+surface_material_override/0 = ExtResource("2_ywwxf")
+
+[node name="Cylinder_010" parent="scientist" index="5"]
+surface_material_override/0 = ExtResource("2_ywwxf")
+
+[node name="Cube_008" parent="scientist" index="8"]
+surface_material_override/0 = ExtResource("5_untbb")
+
+[node name="Cube_009" parent="scientist" index="9"]
+surface_material_override/0 = ExtResource("5_untbb")
+
+[node name="Cube_010" parent="scientist" index="10"]
+surface_material_override/0 = ExtResource("5_untbb")
+
+[node name="Cube_011" parent="scientist" index="11"]
+surface_material_override/0 = ExtResource("5_untbb")
+
+[node name="Cube_012" parent="scientist" index="12"]
+surface_material_override/0 = ExtResource("5_untbb")
+
+[node name="Cube_013" parent="scientist" index="13"]
+surface_material_override/0 = ExtResource("5_untbb")
+
+[node name="Light_001" parent="scientist" index="15"]
+visible = false
+
+[node name="Light_002" parent="scientist" index="16"]
+visible = false
+
+[node name="Skeleton3D" parent="scientist/Armature_001" index="0"]
+bones/0/rotation = Quaternion(-0.085579, -0.0624643, -0.586241, 0.803178)
+bones/1/rotation = Quaternion(-0.494599, 0.598214, 0.377014, 0.505343)
+bones/1/scale = Vector3(1, 1, 1)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_epe23")
+
+[editable path="scientist"]

@@ -127,10 +127,34 @@ fn init_mint<'info>(
 }
 
 fn get_custom_data<'info>(scientist_mint: AccountInfo<'info>) -> CustomData {
-    const TIME_OFFSET: usize = 344;
+    //const TIME_OFFSET: usize = 344;
+    const TIME_OFFSET: usize = 302;
+
     let data = &scientist_mint.data.borrow()[TIME_OFFSET..];
     let mut i = 0;
     let mut strings = Vec::new();
+
+    // Name
+    let name_size = u32::from_le_bytes(data[i..(i + 4)].try_into().unwrap()) as usize;
+    i += 4;
+    i += name_size;
+    msg!("{}", name_size);
+
+    // Symbol
+    let symbol_size = u32::from_le_bytes(data[i..(i + 4)].try_into().unwrap()) as usize;
+    i += 4;
+    i += symbol_size;
+    msg!("{}", symbol_size);
+
+    // URI
+    let uri_size = u32::from_le_bytes(data[i..(i + 4)].try_into().unwrap()) as usize;
+    i += 4;
+    i += uri_size;
+    msg!("{}", uri_size);
+
+    // metadata fields
+    i += 4;
+
     while i < data.len() {
         let key_size = u32::from_le_bytes(data[i..(i + 4)].try_into().unwrap()) as usize;
         msg!("key_size: {}", key_size);
@@ -256,7 +280,7 @@ pub mod solana_science {
                 },
             )
             .with_signer(signer_seeds),
-            "name1".to_string(),
+            "name11".to_string(),
             "symbol1".to_string(),
             "http://uri1.se".to_string(),
         )?;

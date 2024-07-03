@@ -238,6 +238,39 @@ theme_override_constants/shadow_outline_size = 23
 theme_override_font_sizes/font_size = 31
 text = "Bid"
 
+[node name="Label" type="Label" parent="Button6"]
+visible = false
+layout_mode = 0
+offset_left = -76.0
+offset_top = -46.0
+offset_right = -34.0
+offset_bottom = -12.0
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.345098, 0.917647, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 17
+theme_override_font_sizes/font_size = 24
+text = "200"
+
+[node name="Label4" type="Label" parent="Button6"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = -47.0
+offset_right = 85.0
+offset_bottom = -13.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 17
+theme_override_font_sizes/font_size = 24
+text = "-200"
+
 [node name="Button7" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 3
@@ -379,3 +412,5 @@ text = "Book"
 [connection signal="pressed" from="Button" to="." method="place_bid"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="Button3" to="Control" method="publish_book"]
+[connection signal="mouse_entered" from="Button6" to="." method="_on_button_6_mouse_entered"]
+[connection signal="mouse_exited" from="Button6" to="." method="_on_button_6_mouse_exited"]

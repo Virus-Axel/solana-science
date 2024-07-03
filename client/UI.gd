@@ -28,10 +28,29 @@ func calculate_ideas(custom_data) -> int:
 	
 
 func parse_custom_data(data: PackedByteArray) -> Dictionary:
-	const TIME_OFFSET = 344
+	const TIME_OFFSET = 302
 	var data_slice = data.slice(TIME_OFFSET)
 	var i = 0;
 	var ret = {}
+	
+	var name_size = data_slice.decode_u32(i)
+	i += 4
+	var val = data_slice.slice(i, i + name_size).get_string_from_ascii()
+	ret["name"] = val
+	i += name_size
+	
+	var symbol_size = data_slice.decode_u32(i)
+	i += 4
+	val = data_slice.slice(i, i + symbol_size).get_string_from_ascii()
+	ret["symbol"] = val
+	i += symbol_size
+	
+	var uri_size = data_slice.decode_u32(i)
+	i += 4
+	val = data_slice.slice(i, i + uri_size).get_string_from_ascii()
+	ret["uri"] = val
+	i += 4 + uri_size
+	
 	while i < data_slice.size():
 		var key_size = data_slice.decode_u32(i)
 		i += 4
@@ -177,4 +196,14 @@ func _exit_tree():
 
 func place_bid():
 	await $Control.place_bid(UI_bid)
+	pass # Replace with function body.
+
+
+func _on_button_6_mouse_entered():
+	$Button6/Label4.visible = true
+	pass # Replace with function body.
+
+
+func _on_button_6_mouse_exited():
+	$Button6/Label4.visible = false
 	pass # Replace with function body.

@@ -24,6 +24,15 @@ var fb_amount = 0
 var ib_amount = 0
 var db_amount = 0
 
+signal publish_ok
+signal publish_err
+
+signal place_bid_ok
+signal place_bid_err
+
+signal read_ok
+signal read_err
+
 func has_any_books():
 	return fb_amount > 0 || db_amount > 0 || ib_amount > 0
 
@@ -203,8 +212,6 @@ func read_book():
 	elif ib_amount > 0:
 		book_type = 2
 	
-	print(book_type)
-	
 	var ix = $AnchorProgram.build_instruction("research", accounts, AnchorProgram.u8(book_type))
 	
 	$Transaction2.set_payer(payer)
@@ -212,9 +219,7 @@ func read_book():
 	$Transaction2.update_latest_blockhash()
 	
 	$Transaction2.sign_and_send()
-	print(await $Transaction2.transaction_response_received)
-	await $Transaction2.confirmed
-	
+
 
 func place_bid(price):
 	var ata: Pubkey = Pubkey.new_associated_token_address(payer, mint_keypair)
@@ -249,15 +254,13 @@ func place_bid(price):
 	]
 	var ix = $AnchorProgram.build_instruction("place_bid", accounts, price)
 	
-	$Transaction3.instructions.clear()
+	$Transaction4.instructions.clear()
 	
-	$Transaction3.set_payer(payer)
-	$Transaction3.set_instructions([ix])
-	$Transaction3.update_latest_blockhash()
+	$Transaction4.set_payer(payer)
+	$Transaction4.set_instructions([ix])
+	$Transaction4.update_latest_blockhash()
 	
-	$Transaction3.sign_and_send()
-	print(await $Transaction3.transaction_response_received)
-	await $Transaction3.confirmed
+	$Transaction4.sign_and_send()
 
 
 func publish_book():
@@ -272,18 +275,13 @@ func publish_book():
 	var game_account_data = await get_game_account()
 	
 	if game_account_data.is_empty():
-		print("RANDOMIZING!")
 		game_account_data["highest_bidder"] = Pubkey.new_random()
 		game_account_data["seller"] = Pubkey.new_random()
 		game_account_data["seller_scientist"] = Pubkey.new_random()
 	
 	if game_account_data["highest_bidder"].to_string() == SystemProgram.get_pid().to_string():
-		print("SYSTEMPROGRAM")
 		game_account_data["highest_bidder"] = Pubkey.new_random()
-		print(game_account_data["highest_bidder"].to_string())
-	
-	print("SELLLLLLLLL: ")
-	print(game_account_data)
+
 	
 	var accounts = [
 		payer,
@@ -310,8 +308,7 @@ func publish_book():
 	$Transaction3.update_latest_blockhash()
 	
 	$Transaction3.sign_and_send()
-	print(await $Transaction3.transaction_response_received)
-	await $Transaction3.confirmed
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -337,3 +334,25 @@ func init(pk):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+
+func _on_transaction_3_transaction_response_received(result):
+	if result.has("result"):
+		publish_ok.emit()
+	else:
+		publish_err.emit()
+
+
+func _on_transaction_4_transaction_response_received(result):
+	if result.has("result"):
+		place_bid_ok.emit()
+	else:
+		place_bid_err.emit()
+
+
+func _on_transaction_2_transaction_response_received(result):
+	if result.has("result"):
+		read_ok.emit()
+	else:
+		print(result)
+		read_err.emit()

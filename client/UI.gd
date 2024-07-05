@@ -11,6 +11,7 @@ var UI_bid = 0
 var custom_data = {}
 
 var is_reading
+var previous_game_data = {}
 
 func update_reading_anim():
 	if $Control.has_any_books() and not is_reading:
@@ -97,17 +98,16 @@ func parse_custom_data(data: PackedByteArray) -> Dictionary:
 	if ret.has("Last Modified"):
 		if Time.get_unix_time_from_system() < float(ret["Last Modified"]):
 			set_is_reading(float(ret["Last Modified"]) - Time.get_unix_time_from_system())
-			print("AAAAAAAAAAAAAAAaaA")
-			print(float(ret["Last Modified"]) - Time.get_unix_time_from_system())
+
 		else:
-			print("BBBBBBBBBBBBBBBBBBBBB")
-			print(float(ret["Last Modified"]) - Time.get_unix_time_from_system())
 			set_is_not_reading()
 
 	return ret
 
 func set_ideas(ideas: int):
 	$Panel/Label.text = str(ideas)
+	if $AnimationPlayer.is_playing():
+		return
 	if ideas <= 0:
 		$Panel/Button8.disabled = true
 	else:
@@ -205,7 +205,7 @@ func update_ui():
 	custom_data = parse_custom_data(decoded_data)
 	
 	const RANDOM_FACTOR = 30.0
-	var total_read = sqrt(float(custom_data["Book Score"]) / RANDOM_FACTOR)
+	var total_read = 1 + sqrt(float(custom_data["Book Score"]) / RANDOM_FACTOR)
 
 	set_total_read(total_read)
 	
@@ -250,6 +250,7 @@ func load_key(pk):
 func game_account_changed(param):
 	var encoded_data = param["result"]["value"]["data"][0]
 	var game_data = await $Control.game_account_from_data(encoded_data)
+	previous_game_data = game_data
 	
 	if game_data["highest_bidder_scientist"].to_string() == $Control.mint_keypair.get_public_string() and game_data["highest_bid"] > 200:
 		$Button6.disabled = true
@@ -269,7 +270,7 @@ func scientist_data_changed(params):
 	set_published_fascinating(int(custom_data["Published Fascinating Books"]))
 
 	const RANDOM_FACTOR = 30.0
-	var total_read = sqrt(float(custom_data["Book Score"]) / RANDOM_FACTOR)
+	var total_read = 1 + sqrt(float(custom_data["Book Score"]) / RANDOM_FACTOR)
 
 	set_total_read(total_read)
 
@@ -315,9 +316,13 @@ func _exit_tree():
 
 
 func place_bid():
+	$Button6.disabled = true
 	await $Control.place_bid(UI_bid)
 	pass # Replace with function body.
 
+func publish_book():
+	$Panel/Button8.disabled = true
+	$Control.publish_book()
 
 func _on_button_6_mouse_entered():
 	$Button6/Label4.visible = true
@@ -331,9 +336,62 @@ func _on_button_6_mouse_exited():
 
 # READ BOOK
 func _on_button_7_pressed():
+	$Button7.disabled = true
+	$Button7/AnimationPlayer.stop()
 	$Control.read_book()
 	pass # Replace with function body.
 
 
 func _on_button_pressed():
 	get_parent().get_node("ShelfBooks").amount = 100
+
+
+func _on_control_publish_err():
+	$AnimationPlayer.play("new_animation")
+	$Panel/Button8.disabled = true
+	pass # Replace with function body.
+
+
+func _on_control_publish_ok():
+	$AnimationPlayer.play("publish_green")
+	$Panel/Button8.disabled = true
+	pass # Replace with function body.
+
+
+func _on_animation_player_animation_finished(anim_name):
+	update_ideas()
+	pass # Replace with function body.
+
+
+func _on_animation_player_2_animation_finished(anim_name):
+	if previous_game_data.is_empty():
+		return
+	if previous_game_data["highest_bidder_scientist"].to_string() == $Control.mint_keypair.get_public_string() and previous_game_data["highest_bid"] > 200:
+		$Button6.disabled = true
+	else:
+		$Button6.disabled = false
+
+
+func _on_control_place_bid_err():
+	$Button6.disabled = true
+	$AnimationPlayer2.play("bid_red")
+
+
+func _on_control_place_bid_ok():
+	$Button6.disabled = true
+	$AnimationPlayer2.play("bid_green")
+
+
+func _on_control_read_err():
+	$Button7.disabled = true
+	$AnimationPlayer3.play("read_red")
+	$Button7/AnimationPlayer.stop()
+	
+func _on_control_read_ok():
+	$Button7.disabled = true
+	$AnimationPlayer3.play("read_green")
+	$Button7/AnimationPlayer.stop()
+
+
+func _on_animation_player_3_animation_finished(anim_name):
+	update_reading_anim()

@@ -39,6 +39,8 @@ func _on_ui_stop_read():
 		return
 	going_down = false
 	$AnimationPlayer.play_backwards("down")
+	$Ui.is_reading = false
+	$Ui.update_reading_anim()
 	#$progress.visible = false
 	#$progress_bar.visible = false
 	$Timer.stop()

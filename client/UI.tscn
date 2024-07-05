@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d2rmh57p1mrr4"]
+[gd_scene load_steps=28 format=3 uid="uid://d2rmh57p1mrr4"]
 
 [ext_resource type="Script" path="res://UI.gd" id="1_l1uqb"]
 [ext_resource type="Texture2D" uid="uid://bau4jkoxdunc6" path="res://icons/book1.png" id="2_b0a0q"]
@@ -61,6 +61,168 @@ _data = {
 }
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1n1vo"]
+
+[sub_resource type="Animation" id="Animation_ich7b"]
+resource_name = "new_animation"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Button8:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7ck3g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Button8:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_pv3hq"]
+resource_name = "publish_green"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Button8:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 1, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1naeo"]
+_data = {
+"RESET": SubResource("Animation_7ck3g"),
+"new_animation": SubResource("Animation_ich7b"),
+"publish_green": SubResource("Animation_pv3hq")
+}
+
+[sub_resource type="Animation" id="Animation_jek4p"]
+resource_name = "bid_red"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Button6:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qo6vp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Button6:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cmmij"]
+resource_name = "bid_green"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Button6:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 1, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8wrsq"]
+_data = {
+"RESET": SubResource("Animation_qo6vp"),
+"bid_green": SubResource("Animation_cmmij"),
+"bid_red": SubResource("Animation_jek4p")
+}
+
+[sub_resource type="Animation" id="Animation_u5k4w"]
+resource_name = "read_red"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Button7:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_y616j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Button7:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xjpl5"]
+resource_name = "read_green"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Button7:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 1, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nq1sp"]
+_data = {
+"RESET": SubResource("Animation_y616j"),
+"read_green": SubResource("Animation_xjpl5"),
+"read_red": SubResource("Animation_u5k4w")
+}
 
 [node name="Ui" type="Control"]
 layout_mode = 3
@@ -449,10 +611,36 @@ theme_override_constants/shadow_outline_size = 21
 theme_override_font_sizes/font_size = 18
 text = "x0"
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1naeo")
+}
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8wrsq")
+}
+
+[node name="AnimationPlayer3" type="AnimationPlayer" parent="."]
+root_node = NodePath("../AnimationPlayer2")
+libraries = {
+"": SubResource("AnimationLibrary_nq1sp")
+}
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="place_bid_err" from="Control" to="." method="_on_control_place_bid_err"]
+[connection signal="place_bid_ok" from="Control" to="." method="_on_control_place_bid_ok"]
+[connection signal="publish_err" from="Control" to="." method="_on_control_publish_err"]
+[connection signal="publish_ok" from="Control" to="." method="_on_control_publish_ok"]
+[connection signal="read_err" from="Control" to="." method="_on_control_read_err"]
+[connection signal="read_ok" from="Control" to="." method="_on_control_read_ok"]
 [connection signal="mouse_entered" from="Button6" to="." method="_on_button_6_mouse_entered"]
 [connection signal="mouse_exited" from="Button6" to="." method="_on_button_6_mouse_exited"]
 [connection signal="pressed" from="Button6" to="." method="place_bid"]
 [connection signal="pressed" from="Button7" to="." method="_on_button_7_pressed"]
-[connection signal="pressed" from="Panel/Button8" to="Control" method="publish_book"]
+[connection signal="animation_finished" from="Button7/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="pressed" from="Panel/Button8" to="." method="publish_book"]
 [connection signal="timeout" from="Timer" to="." method="update_ideas"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer2" to="." method="_on_animation_player_2_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer3" to="." method="_on_animation_player_3_animation_finished"]

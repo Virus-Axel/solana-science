@@ -422,3 +422,9 @@ idl = {
 [node name="Transaction3" type="Transaction" parent="."]
 
 [node name="SolanaClient" type="SolanaClient" parent="."]
+
+[node name="Transaction4" type="Transaction" parent="."]
+
+[connection signal="transaction_response_received" from="Transaction2" to="." method="_on_transaction_2_transaction_response_received"]
+[connection signal="transaction_response_received" from="Transaction3" to="." method="_on_transaction_3_transaction_response_received"]
+[connection signal="transaction_response_received" from="Transaction4" to="." method="_on_transaction_4_transaction_response_received"]

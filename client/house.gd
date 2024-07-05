@@ -51,3 +51,7 @@ func _on_timer_timeout():
 	var progress = where / float($Ui.TIME_TO_READ_BOOK)
 
 	set_read_progress(progress)
+
+
+func _on_audio_stream_player_3_finished():
+	$AudioStreamPlayer3.play()

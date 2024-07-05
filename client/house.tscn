@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bwq5uuie4b8ni"]
+[gd_scene load_steps=29 format=3 uid="uid://bwq5uuie4b8ni"]
 
 [ext_resource type="Script" path="res://house.gd" id="1_vhmhj"]
 [ext_resource type="Material" uid="uid://0u76wuntn8io" path="res://materials/beard.tres" id="2_2fkm2"]
@@ -15,6 +15,7 @@
 [ext_resource type="Material" uid="uid://kb076vvmyp41" path="res://materials/page.tres" id="13_453f8"]
 [ext_resource type="PackedScene" uid="uid://bfm3jqrhp75qd" path="res://models/progress_bar.glb" id="14_cuv2i"]
 [ext_resource type="AudioStream" uid="uid://chfoo8qrjhvb3" path="res://sounds/book_floor.wav" id="15_avrb6"]
+[ext_resource type="AudioStream" uid="uid://di8ltsi0qcag" path="res://sounds/240705_Bookworm.mp3" id="16_td233"]
 
 [sub_resource type="Environment" id="Environment_epe23"]
 background_energy_multiplier = 0.0
@@ -707,8 +708,13 @@ stream = ExtResource("15_avrb6")
 volume_db = -7.174
 pitch_scale = 2.16
 
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_td233")
+autoplay = true
+
 [connection signal="timeout" from="stop_timer" to="." method="_on_ui_stop_read"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="finished" from="AudioStreamPlayer3" to="." method="_on_audio_stream_player_3_finished"]
 
 [editable path="scientist"]
 [editable path="progress"]

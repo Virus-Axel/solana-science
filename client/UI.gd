@@ -5,9 +5,10 @@ var scientist = "5pnJmbAtTj6sBmEFttUyYLnpHMUdLubTM3fnstLxZX2j"
 var payer;
 
 const TIME_TO_READ_BOOK = 120
-const TIME_PER_IDEA = 5.0
+const TIME_PER_IDEA = 50.0
 
 var UI_bid = 0
+var prev_cash = -1
 var custom_data = {}
 
 var is_reading
@@ -157,6 +158,9 @@ func set_token_name(name: String):
 	$Label11.text = name
 
 func set_cash(cash: int):
+	if prev_cash < cash and prev_cash != -1:
+		$AudioStreamPlayer4.play()
+	prev_cash = cash
 	$HBoxContainer2/Label4.text = "x" + str(cash)
 	$Label3.text = "Cash: " + str(cash)
 
@@ -205,7 +209,7 @@ func update_ui():
 	custom_data = parse_custom_data(decoded_data)
 	
 	const RANDOM_FACTOR = 30.0
-	var total_read = 1 + sqrt(float(custom_data["Book Score"]) / RANDOM_FACTOR)
+	var total_read = sqrt(float(custom_data["Book Score"]) / RANDOM_FACTOR)
 
 	set_total_read(total_read)
 	
@@ -270,7 +274,7 @@ func scientist_data_changed(params):
 	set_published_fascinating(int(custom_data["Published Fascinating Books"]))
 
 	const RANDOM_FACTOR = 30.0
-	var total_read = 1 + sqrt(float(custom_data["Book Score"]) / RANDOM_FACTOR)
+	var total_read = sqrt(float(custom_data["Book Score"]) / RANDOM_FACTOR)
 
 	set_total_read(total_read)
 
@@ -349,12 +353,14 @@ func _on_button_pressed():
 func _on_control_publish_err():
 	$AnimationPlayer.play("new_animation")
 	$Panel/Button8.disabled = true
+	$AudioStreamPlayer3.play()
 	pass # Replace with function body.
 
 
 func _on_control_publish_ok():
 	$AnimationPlayer.play("publish_green")
 	$Panel/Button8.disabled = true
+	$AudioStreamPlayer2.play()
 	pass # Replace with function body.
 
 
@@ -374,24 +380,32 @@ func _on_animation_player_2_animation_finished(anim_name):
 
 func _on_control_place_bid_err():
 	$Button6.disabled = true
+	$AudioStreamPlayer3.play()
 	$AnimationPlayer2.play("bid_red")
 
 
 func _on_control_place_bid_ok():
 	$Button6.disabled = true
+	$AudioStreamPlayer2.play()
 	$AnimationPlayer2.play("bid_green")
 
 
 func _on_control_read_err():
 	$Button7.disabled = true
 	$AnimationPlayer3.play("read_red")
+	$AudioStreamPlayer3.play()
 	$Button7/AnimationPlayer.stop()
 	
 func _on_control_read_ok():
 	$Button7.disabled = true
 	$AnimationPlayer3.play("read_green")
+	$AudioStreamPlayer2.play()
 	$Button7/AnimationPlayer.stop()
 
 
 func _on_animation_player_3_animation_finished(anim_name):
 	update_reading_anim()
+
+
+func play_click():
+	$AudioStreamPlayer.play()

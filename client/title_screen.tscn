@@ -1,7 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://v77dftufubst"]
+[gd_scene load_steps=13 format=3 uid="uid://v77dftufubst"]
 
 [ext_resource type="Script" path="res://title_screen.gd" id="1_4uatw"]
 [ext_resource type="Texture2D" uid="uid://bh878eshhews2" path="res://icons/bg.png" id="2_xe5ua"]
+[ext_resource type="AudioStream" uid="uid://vrm1x1kakmgs" path="res://sounds/grab.wav" id="3_076md"]
+[ext_resource type="AudioStream" uid="uid://dmducespabo0t" path="res://sounds/a1.wav" id="4_8sd4o"]
+[ext_resource type="AudioStream" uid="uid://th5xf2m5ohfl" path="res://sounds/respawn.wav" id="5_505n3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8qp2"]
 bg_color = Color(0.796277, 0.804089, 0.800183, 1)
@@ -10,6 +13,21 @@ corner_radius_top_left = 35
 corner_radius_top_right = 10
 corner_radius_bottom_right = 35
 corner_radius_bottom_left = 10
+
+[sub_resource type="Animation" id="Animation_1ie72"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label11:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_5sfvd"]
 resource_name = "new_animation"
@@ -28,21 +46,6 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_1ie72"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Label11:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wd68i"]
 _data = {
 "RESET": SubResource("Animation_1ie72"),
@@ -58,6 +61,9 @@ corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8fh1"]
 bg_color = Color(0.372549, 0.372549, 0.372549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_51tiq"]
+bg_color = Color(0, 0, 0, 1)
 
 [node name="TitleScreen" type="Control"]
 z_as_relative = false
@@ -550,10 +556,151 @@ theme_override_constants/v_separation = 0
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 25
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_076md")
+volume_db = -23.436
+pitch_scale = 0.4
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_8sd4o")
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_505n3")
+volume_db = -22.008
+pitch_scale = 0.9
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -332.0
+offset_top = -418.0
+offset_right = 332.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 30
+theme_override_font_sizes/font_size = 31
+text = "This game is made in Godot.
+It is an experiment on Token2022.
+The Scientist is an NFT with data stored in it.
+Buy books to increase your NFT knowledge.
+Turn ideas into books and sell to get money.
+Use the money to buy more books.
+The books are tokens themselves
+		// Axel"
+horizontal_alignment = 1
+
+[node name="Panel3" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -216.0
+offset_top = -101.0
+offset_right = 217.0
+offset_bottom = 281.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_51tiq")
+
+[node name="Label2" type="Label" parent="Panel3"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 26.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 21
+theme_override_font_sizes/font_size = 18
+text = "Error:"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Button10" type="Button" parent="Panel3"]
+custom_minimum_size = Vector2(90, 69)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -59.5
+offset_top = -69.0
+offset_right = 59.5
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_t8qp2")
+
+[node name="Label2" type="Label" parent="Panel3/Button10"]
+layout_mode = 2
+offset_left = 33.0
+offset_top = -5.94501
+offset_right = 120.0
+offset_bottom = 64.055
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 21
+theme_override_font_sizes/font_size = 34
+text = "Go"
+
+[node name="Label3" type="Label" parent="Panel3/Button10"]
+layout_mode = 2
+offset_left = 17.0
+offset_top = 19.0
+offset_right = 110.0
+offset_bottom = 89.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 23
+theme_override_font_sizes/font_size = 31
+text = "Back"
+
+[connection signal="mouse_entered" from="VBoxContainer/Button8" to="." method="play_hover_sound"]
 [connection signal="pressed" from="VBoxContainer/Button8" to="." method="_on_button_8_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/Button9" to="." method="play_hover_sound"]
 [connection signal="pressed" from="VBoxContainer/Button9" to="." method="show_load_files"]
+[connection signal="mouse_entered" from="VBoxContainer2/OptionButton" to="." method="play_hover_sound"]
+[connection signal="connection_established" from="WalletAdapter" to="." method="con_ok"]
+[connection signal="connection_failed" from="WalletAdapter" to="." method="conn_err"]
+[connection signal="mouse_entered" from="Panel/Button9" to="." method="play_hover_sound"]
 [connection signal="pressed" from="Panel/Button9" to="." method="_on_button_9_pressed"]
+[connection signal="pressed" from="Panel/Button9" to="." method="play_confirm_sound"]
+[connection signal="mouse_entered" from="Panel/Button10" to="." method="play_hover_sound"]
 [connection signal="pressed" from="Panel/Button10" to="." method="remove_naming"]
+[connection signal="pressed" from="Panel/Button10" to="." method="play_deny"]
+[connection signal="transaction_response_received" from="Panel/Transaction" to="." method="_on_transaction_transaction_response_received"]
+[connection signal="mouse_entered" from="Panel2/Button9" to="." method="play_hover_sound"]
 [connection signal="pressed" from="Panel2/Button9" to="." method="_on_button_10_pressed"]
+[connection signal="pressed" from="Panel2/Button9" to="." method="play_confirm_button"]
+[connection signal="mouse_entered" from="Panel2/Button10" to="." method="play_hover_sound"]
 [connection signal="pressed" from="Panel2/Button10" to="." method="remove_load"]
+[connection signal="pressed" from="Panel2/Button10" to="." method="play_deny"]
+[connection signal="transaction_response_received" from="Panel2/Transaction" to="." method="_on_transaction_transaction_response_received"]
 [connection signal="item_selected" from="Panel2/ItemList" to="." method="_on_item_list_item_selected"]
+[connection signal="mouse_entered" from="Panel3/Button10" to="." method="play_hover_sound"]
+[connection signal="pressed" from="Panel3/Button10" to="." method="play_deny"]
+[connection signal="pressed" from="Panel3/Button10" to="." method="err_b"]

@@ -43,6 +43,7 @@ func _process(delta):
 			time = 0.0
 			goal.visible = true
 			$AnimBook.position = start_pos
+			get_parent().get_node("AudioStreamPlayer").play()
 		else:
 			var new_pos = lerp(start_pos, goal.position, time / ANIMATION_TIME)
 			var new_rot = lerp(start_rot, goal.rotation, time / ANIMATION_TIME)

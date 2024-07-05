@@ -47,6 +47,7 @@ func _process(delta):
 	if is_adding:
 		time += delta
 		if time > ANIMATION_TIME:
+			get_parent().get_node("AudioStreamPlayer2").play()
 			is_adding = false
 			time = 0.0
 			goal.visible = true

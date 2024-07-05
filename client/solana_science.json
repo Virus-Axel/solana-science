@@ -8,6 +8,173 @@
 	},
 	"instructions": [
 		{
+			"name": "init_atas",
+			"discriminator": [
+				153,
+				220,
+				250,
+				247,
+				156,
+				93,
+				29,
+				186
+			],
+			"accounts": [
+				{
+					"name": "payer",
+					"writable": true,
+					"signer": true
+				},
+				{
+					"name": "book_account",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "account",
+								"path": "payer"
+							},
+							{
+								"kind": "const",
+								"value": [
+									6,
+									221,
+									246,
+									225,
+									215,
+									101,
+									161,
+									147,
+									217,
+									203,
+									225,
+									70,
+									206,
+									235,
+									121,
+									172,
+									28,
+									180,
+									133,
+									237,
+									95,
+									91,
+									55,
+									145,
+									58,
+									140,
+									245,
+									133,
+									126,
+									255,
+									0,
+									169
+								]
+							},
+							{
+								"kind": "account",
+								"path": "book_mint"
+							}
+						],
+						"program": {
+							"kind": "const",
+							"value": [
+								140,
+								151,
+								37,
+								143,
+								78,
+								36,
+								137,
+								241,
+								187,
+								61,
+								16,
+								41,
+								20,
+								142,
+								13,
+								131,
+								11,
+								90,
+								19,
+								153,
+								218,
+								255,
+								16,
+								132,
+								4,
+								142,
+								123,
+								216,
+								219,
+								233,
+								248,
+								89
+							]
+						}
+					}
+				},
+				{
+					"name": "book_mint"
+				},
+				{
+					"name": "scientist_authority",
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [
+									83,
+									79,
+									76,
+									65,
+									78,
+									65,
+									95,
+									83,
+									67,
+									73,
+									69,
+									78,
+									67,
+									69,
+									95,
+									65,
+									85,
+									84,
+									72,
+									79,
+									82,
+									73,
+									84,
+									89,
+									95,
+									83,
+									69,
+									69,
+									68
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "system_program",
+					"address": "11111111111111111111111111111111"
+				},
+				{
+					"name": "token_program",
+					"address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+				},
+				{
+					"name": "associated_token_program",
+					"address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+				}
+			],
+			"args": []
+		},
+		{
 			"name": "initialize",
 			"discriminator": [
 				175,
@@ -117,273 +284,15 @@
 				},
 				{
 					"name": "decent_book_account",
-					"writable": true,
-					"pda": {
-						"seeds": [
-							{
-								"kind": "account",
-								"path": "payer"
-							},
-							{
-								"kind": "const",
-								"value": [
-									6,
-									221,
-									246,
-									225,
-									215,
-									101,
-									161,
-									147,
-									217,
-									203,
-									225,
-									70,
-									206,
-									235,
-									121,
-									172,
-									28,
-									180,
-									133,
-									237,
-									95,
-									91,
-									55,
-									145,
-									58,
-									140,
-									245,
-									133,
-									126,
-									255,
-									0,
-									169
-								]
-							},
-							{
-								"kind": "account",
-								"path": "decent_book_mint"
-							}
-						],
-						"program": {
-							"kind": "const",
-							"value": [
-								140,
-								151,
-								37,
-								143,
-								78,
-								36,
-								137,
-								241,
-								187,
-								61,
-								16,
-								41,
-								20,
-								142,
-								13,
-								131,
-								11,
-								90,
-								19,
-								153,
-								218,
-								255,
-								16,
-								132,
-								4,
-								142,
-								123,
-								216,
-								219,
-								233,
-								248,
-								89
-							]
-						}
-					}
+					"writable": true
 				},
 				{
 					"name": "interesting_book_account",
-					"writable": true,
-					"pda": {
-						"seeds": [
-							{
-								"kind": "account",
-								"path": "payer"
-							},
-							{
-								"kind": "const",
-								"value": [
-									6,
-									221,
-									246,
-									225,
-									215,
-									101,
-									161,
-									147,
-									217,
-									203,
-									225,
-									70,
-									206,
-									235,
-									121,
-									172,
-									28,
-									180,
-									133,
-									237,
-									95,
-									91,
-									55,
-									145,
-									58,
-									140,
-									245,
-									133,
-									126,
-									255,
-									0,
-									169
-								]
-							},
-							{
-								"kind": "account",
-								"path": "interesting_book_mint"
-							}
-						],
-						"program": {
-							"kind": "const",
-							"value": [
-								140,
-								151,
-								37,
-								143,
-								78,
-								36,
-								137,
-								241,
-								187,
-								61,
-								16,
-								41,
-								20,
-								142,
-								13,
-								131,
-								11,
-								90,
-								19,
-								153,
-								218,
-								255,
-								16,
-								132,
-								4,
-								142,
-								123,
-								216,
-								219,
-								233,
-								248,
-								89
-							]
-						}
-					}
+					"writable": true
 				},
 				{
 					"name": "fascinating_book_account",
-					"writable": true,
-					"pda": {
-						"seeds": [
-							{
-								"kind": "account",
-								"path": "payer"
-							},
-							{
-								"kind": "const",
-								"value": [
-									6,
-									221,
-									246,
-									225,
-									215,
-									101,
-									161,
-									147,
-									217,
-									203,
-									225,
-									70,
-									206,
-									235,
-									121,
-									172,
-									28,
-									180,
-									133,
-									237,
-									95,
-									91,
-									55,
-									145,
-									58,
-									140,
-									245,
-									133,
-									126,
-									255,
-									0,
-									169
-								]
-							},
-							{
-								"kind": "account",
-								"path": "fascinating_book_mint"
-							}
-						],
-						"program": {
-							"kind": "const",
-							"value": [
-								140,
-								151,
-								37,
-								143,
-								78,
-								36,
-								137,
-								241,
-								187,
-								61,
-								16,
-								41,
-								20,
-								142,
-								13,
-								131,
-								11,
-								90,
-								19,
-								153,
-								218,
-								255,
-								16,
-								132,
-								4,
-								142,
-								123,
-								216,
-								219,
-								233,
-								248,
-								89
-							]
-						}
-					}
+					"writable": true
 				},
 				{
 					"name": "scientist_mint"

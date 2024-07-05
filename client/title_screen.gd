@@ -1,8 +1,10 @@
 extends Control
 
-const GAME_PRICE = 10.0
+const GAME_PRICE = 0.3
 const LAMPORTS_PER_SOL = 1000000000
 const SAVES_DIR = "user://"
+
+var payer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -52,10 +54,10 @@ func _on_button_8_pressed():
 	$WalletAdapter.connect_wallet()
 	var ut = Time.get_unix_time_from_system()
 	var timestamp = Time.get_datetime_string_from_unix_time(ut)
+	
 	await $WalletAdapter.connection_established
 	
-	show_naming()
-	
+
 
 func show_load_files():
 	$Panel2/ItemList.clear()
@@ -79,15 +81,12 @@ func show_load_files():
 
 
 func _on_button_9_pressed():
-	var payer = Keypair.new_random()
-	var scientist_name = $Panel/LineEdit.text
-	payer.save_to_file(SAVES_DIR + scientist_name + ".json")
+	payer = Keypair.new_random()
 
 	$Panel/Transaction.set_payer($WalletAdapter)
 	
 	var ix = SystemProgram.transfer($WalletAdapter, payer, GAME_PRICE * LAMPORTS_PER_SOL)
 
-	print(payer.get_public_string())
 
 	$Panel/Transaction.set_instructions([ix])
 	$Panel/Transaction.update_latest_blockhash()
@@ -95,7 +94,10 @@ func _on_button_9_pressed():
 	$Panel/Transaction.sign_and_send()
 	
 	await $Panel/Transaction.confirmed
-	print("RES")
+
+func go_on():
+	var scientist_name = $Panel/LineEdit.text
+	payer.save_to_file(SAVES_DIR + scientist_name + ".json")
 	
 	var new_scene = load("res://house.tscn").instantiate()
 	get_tree().root.add_child(new_scene)
@@ -117,3 +119,55 @@ func _on_button_10_pressed():
 func _on_item_list_item_selected(index):
 	$Panel2/Button9.disabled = false
 	pass # Replace with function body.
+
+
+func play_hover_sound():
+	$AudioStreamPlayer.play()
+
+
+func play_confirm_button():
+	$AudioStreamPlayer2.play()
+
+
+func play_confirm_sound():
+	$AudioStreamPlayer2.play()
+
+
+func play_deny():
+	$AudioStreamPlayer3.play()
+	pass # Replace with function body.
+
+func show_error(msg):
+	$Panel2.visible = false
+	$Panel.visible = false
+	$Panel3.visible = true
+	modulate.r = 1.0
+	modulate.g = 1.0
+	modulate.b = 1.0
+	$Panel3/Label2.text = "Error:\nUnknown error"
+	print(msg)
+	if not msg.has("error"):
+		return
+	if not msg["error"].has("message"):
+		return
+	$Panel3/Label2.text = "Error:\n" + msg["error"]["message"]
+
+
+func _on_transaction_transaction_response_received(result):
+	if result.has("result"):
+		await get_tree().create_timer(2.0).timeout
+		go_on()
+	else:
+		show_error(result)
+
+
+func err_b():
+	$Panel3.visible = false
+
+
+func conn_err():
+	show_error({"error": {"message": "No provider detected. Supported wallets are: Phantom, Solflare and Backpack"}})
+
+
+func con_ok():
+	show_naming()

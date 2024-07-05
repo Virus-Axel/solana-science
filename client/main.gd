@@ -33,6 +33,55 @@ signal place_bid_err
 signal read_ok
 signal read_err
 
+func init_associated_tokens():
+	var mint_authority: Pubkey = Pubkey.new_pda(["SOLANA_SCIENCE_AUTHORITY_SEED"], $AnchorProgram.get_pid())
+
+	var decent_book_account: Pubkey = Pubkey.new_associated_token_address(payer, decent_book_keypair)
+	var interesting_book_account: Pubkey = Pubkey.new_associated_token_address(payer, interesting_book_keypair)
+	var fascinating_book_account: Pubkey = Pubkey.new_associated_token_address(payer, fascinating_book_keypair)
+	
+	var accounts1 = [
+		payer,
+		decent_book_account,
+		decent_book_keypair,
+		mint_authority,
+		
+		SystemProgram.get_pid(),
+		TokenProgram2022.get_pid(),
+		AssociatedTokenAccountProgram.get_pid(),
+	]
+	var accounts2 = [
+		payer,
+		interesting_book_account,
+		interesting_book_keypair,
+		mint_authority,
+		
+		SystemProgram.get_pid(),
+		TokenProgram2022.get_pid(),
+		AssociatedTokenAccountProgram.get_pid(),
+	]
+	var accounts3 = [
+		payer,
+		fascinating_book_account,
+		fascinating_book_keypair,
+		mint_authority,
+		
+		SystemProgram.get_pid(),
+		TokenProgram2022.get_pid(),
+		AssociatedTokenAccountProgram.get_pid(),
+	]
+	$Transaction5.set_payer(payer)
+	
+	var ix1 = $AnchorProgram.build_instruction("init_atas", accounts1, null)
+	var ix2 = $AnchorProgram.build_instruction("init_atas", accounts2, null)
+	var ix3 = $AnchorProgram.build_instruction("init_atas", accounts3, null)
+	$Transaction5.set_instructions([ix1, ix2, ix3])
+	$Transaction5.update_latest_blockhash()
+	
+	$Transaction5.sign_and_send()
+	print(await $Transaction5.transaction_response_received)
+	await $Transaction5.confirmed
+
 func has_any_books():
 	return fb_amount > 0 || db_amount > 0 || ib_amount > 0
 
@@ -323,6 +372,7 @@ func init(pk):
 	# Shhhhhhhhhh
 	mint_keypair = Keypair.new_from_seed(pk.get_public_bytes())
 	#await init_book_mints()
+	await init_associated_tokens()
 	await new_scientist()
 	#await read_book()
 	#await publish_book()

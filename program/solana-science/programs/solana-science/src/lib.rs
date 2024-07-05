@@ -47,7 +47,7 @@ const PUBLISHED_INTERESING_BOOKS: &str = "Published Interesting Books";
 const PUBLISHED_FASCINATING_BOOKS: &str = "Published Fascinating Books";
 const CASH_FIELD: &str = "Cash";
 
-const TIME_PER_IDEA: f64 = 5.0;
+const TIME_PER_IDEA: f64 = 50.0;
 
 struct CustomData {
     pub cash: u64,
@@ -120,7 +120,7 @@ fn init_mint<'info>(
                 to: mint_acc.clone(),
             },
         ),
-        1000000000,
+        10000000,
     )?;
 
     token_metadata_initialize(
@@ -280,7 +280,7 @@ pub mod solana_science {
                     to: ctx.accounts.scientist_mint.to_account_info(),
                 },
             ),
-            1000000000,
+            10000000,
         )?;
 
         token_metadata_initialize(
@@ -442,6 +442,10 @@ pub mod solana_science {
             0.to_string(),
         )?;
 
+        Ok(())
+    }
+
+    pub fn init_atas(ctx: Context<InitAtas>) -> Result<()> {
         Ok(())
     }
 
@@ -816,7 +820,7 @@ pub struct NewScientist<'info> {
     pub payer: Signer<'info>,
     /// CHECK: New NFT mint
     #[account(
-        init,
+        init_if_needed,
         payer = payer,
         space = 234,
         owner = token_program.key(),
@@ -843,24 +847,21 @@ pub struct Initialize<'info> {
     )]
     pub scientist_account: InterfaceAccount<'info, TokenAccount>,
     #[account(
-        init_if_needed,
-        payer = payer,
-        associated_token::mint = decent_book_mint,
-        associated_token::authority = payer,
+        mut,
+        //associated_token::mint = decent_book_mint,
+        //associated_token::authority = payer,
     )]
     pub decent_book_account: InterfaceAccount<'info, TokenAccount>,
     #[account(
-        init_if_needed,
-        payer = payer,
-        associated_token::mint = interesting_book_mint,
-        associated_token::authority = payer,
+        mut,
+        //associated_token::mint = interesting_book_mint,
+        //associated_token::authority = payer,
     )]
     pub interesting_book_account: InterfaceAccount<'info, TokenAccount>,
     #[account(
-        init_if_needed,
-        payer = payer,
-        associated_token::mint = fascinating_book_mint,
-        associated_token::authority = payer,
+        mut,
+        //associated_token::mint = fascinating_book_mint,
+        //associated_token::authority = payer,
     )]
     pub fascinating_book_account: InterfaceAccount<'info, TokenAccount>,
 
@@ -996,6 +997,29 @@ pub struct PlaceBid<'info> {
     pub previous_bidder: UncheckedAccount<'info>,
 
     pub token_program: Program<'info, Token2022>,
+}
+
+#[derive(Accounts)]
+pub struct InitAtas<'info> {
+    #[account(mut, signer)]
+    pub payer: Signer<'info>,
+    #[account(
+        init,
+        payer = payer,
+        associated_token::mint = book_mint,
+        associated_token::authority = payer,
+    )]
+    pub book_account: InterfaceAccount<'info, TokenAccount>,
+
+    #[account(mint::authority = scientist_authority.key())]
+    pub book_mint: InterfaceAccount<'info, Mint>,
+    /// CHECK: PDA Mint authority
+    #[account(seeds = [AUTHORITY_SEED], bump)]
+    pub scientist_authority: UncheckedAccount<'info>,
+
+    pub system_program: Program<'info, System>,
+    pub token_program: Program<'info, Token2022>,
+    pub associated_token_program: Program<'info, AssociatedToken>,
 }
 
 #[account]

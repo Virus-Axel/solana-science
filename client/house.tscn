@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bwq5uuie4b8ni"]
+[gd_scene load_steps=27 format=3 uid="uid://bwq5uuie4b8ni"]
 
 [ext_resource type="Script" path="res://house.gd" id="1_vhmhj"]
 [ext_resource type="Material" uid="uid://0u76wuntn8io" path="res://materials/beard.tres" id="2_2fkm2"]
@@ -11,6 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://dewdsxubka7x8" path="res://book_pile_2.tscn" id="9_jgpy8"]
 [ext_resource type="PackedScene" uid="uid://c878dytrmtysy" path="res://book_pile_3.tscn" id="10_l42aq"]
 [ext_resource type="PackedScene" uid="uid://bth3hiyc4owf2" path="res://shelf_books.tscn" id="11_0ftmg"]
+[ext_resource type="PackedScene" uid="uid://dr7uscoauur6y" path="res://models/progress.glb" id="12_b2w7i"]
+[ext_resource type="Material" uid="uid://kb076vvmyp41" path="res://materials/page.tres" id="13_453f8"]
+[ext_resource type="PackedScene" uid="uid://bfm3jqrhp75qd" path="res://models/progress_bar.glb" id="14_cuv2i"]
 
 [sub_resource type="Environment" id="Environment_epe23"]
 background_energy_multiplier = 0.0
@@ -430,6 +433,66 @@ nodes/Blend2/node = SubResource("AnimationNodeBlend2_xkg52")
 nodes/Blend2/position = Vector2(120, 140)
 node_connections = [&"Blend2", 0, &"Animation", &"Blend2", 1, &"Animation 2", &"output", 0, &"Blend2"]
 
+[sub_resource type="Animation" id="Animation_doh07"]
+resource_name = "down"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("progress_bar:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-13.103, -1.113, -4.257), Vector3(-13.1032, -2.11269, -4.25743)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("progress:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-13.095, -1.004, -4.264), Vector3(-13.0946, -2.00414, -4.26388)]
+}
+
+[sub_resource type="Animation" id="Animation_hu5mb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("progress:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-13.0946, -2.00414, -4.26388)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("progress_bar:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-13.1032, -2.11269, -4.25743)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t5jx3"]
+_data = {
+"RESET": SubResource("Animation_hu5mb"),
+"down": SubResource("Animation_doh07")
+}
+
 [node name="Node3D" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.83895)
 script = ExtResource("1_vhmhj")
@@ -556,4 +619,86 @@ transform = Transform3D(1.169, 0, 0, 0, 1.07379, 0, 0, 0, 1.169, -15.5857, -3.92
 [node name="ShelfBooks" parent="." instance=ExtResource("11_0ftmg")]
 transform = Transform3D(1.08744, 0, 0, 0, 1.08744, 0, 0, 0, 1.08744, -15.4841, -2.61736, -5.37748)
 
+[node name="progress" parent="." instance=ExtResource("12_b2w7i")]
+transform = Transform3D(-0.56, 0, -4.89568e-08, -1.26709e-08, 0.540918, 0.144939, 4.72886e-08, 0.144939, -0.540918, -13.0946, -2.00414, -4.26388)
+visible = false
+
+[node name="Plane" parent="progress/Armature_001/Cube_014" index="0"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Plane_001" parent="progress/Armature_001/Cube_014" index="1"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Plane_002" parent="progress/Armature_001/Cube_014" index="2"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Plane_003" parent="progress/Armature_001/Cube_014" index="3"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Plane_004" parent="progress/Armature_001/Cube_014" index="4"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Plane_005" parent="progress/Armature_001/Cube_014" index="5"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Plane_006" parent="progress/Armature_001/Cube_014" index="6"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Plane_007" parent="progress/Armature_001/Cube_014" index="7"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Plane_008" parent="progress/Armature_001/Cube_014" index="8"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Plane_009" parent="progress/Armature_001/Cube_014" index="9"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Plane_010" parent="progress/Armature_001/Cube_014" index="10"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Plane_011" parent="progress/Armature_001/Cube_014" index="11"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Plane_012" parent="progress/Armature_001/Cube_014" index="12"]
+"blend_shapes/Key 1" = 1.0
+surface_material_override/0 = ExtResource("13_453f8")
+
+[node name="Skeleton3D" parent="progress/Armature_001" index="1"]
+bones/0/rotation = Quaternion(-0.0673323, -0.081804, -0.76775, 0.631929)
+bones/0/scale = Vector3(1, 1, 1)
+bones/1/rotation = Quaternion(-0.494599, 0.598214, 0.377014, 0.505343)
+bones/1/scale = Vector3(1, 1, 1)
+
+[node name="progress_bar" parent="." instance=ExtResource("14_cuv2i")]
+transform = Transform3D(0.380974, 0, 0, 0, 0.380974, 0, 0, 0, 0.380974, -13.1032, -2.11269, -4.25743)
+visible = false
+
+[node name="stop_timer" type="Timer" parent="."]
+wait_time = 120.0
+one_shot = true
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_t5jx3")
+}
+
+[connection signal="timeout" from="stop_timer" to="." method="_on_ui_stop_read"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+
 [editable path="scientist"]
+[editable path="progress"]
+[editable path="progress_bar"]

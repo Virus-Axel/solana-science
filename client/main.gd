@@ -2,9 +2,16 @@ extends Control
 
 var payer : Keypair = Keypair.new_from_file("res://payer.json")
 var mint_keypair: Keypair = Keypair.new_random()
-var decent_book_keypair: Keypair = Keypair.new_random()
-var interesting_book_keypair: Keypair = Keypair.new_random()
-var fascinating_book_keypair: Keypair = Keypair.new_random()
+var scientist_name
+
+# Todo, use existing mints and do not expose private key.
+#var decent_book_keypair: Keypair = Keypair.new_random()
+#var interesting_book_keypair: Keypair = Keypair.new_random()
+#var fascinating_book_keypair: Keypair = Keypair.new_random()
+
+var decent_book_keypair: Keypair = Keypair.new_from_seed([108, 4, 53, 212, 153, 18, 178, 40, 230, 208, 84, 15, 190, 96, 119, 160, 151, 21, 196, 83, 173, 87, 140, 174, 140, 228, 212, 90, 27, 86, 116, 111])
+var interesting_book_keypair: Keypair = Keypair.new_from_seed([26, 129, 203, 18, 146, 4, 117, 25, 93, 140, 104, 221, 139, 225, 162, 239, 6, 222, 67, 216, 165, 123, 129, 245, 138, 137, 156, 247, 203, 172, 66, 12])
+var fascinating_book_keypair: Keypair = Keypair.new_from_seed([89, 219, 60, 175, 45, 153, 177, 68, 158, 28, 66, 65, 158, 187, 66, 39, 150, 121, 90, 24, 166, 135, 15, 122, 182, 178, 51, 226, 88, 67, 49, 77])
 
 #var decent_book_keypair: Pubkey = Pubkey.new_from_string("FDMnm7Wh2cgFVAQ81EHrFJQ8QVmgNqqKvYo5HJGWSQDN")
 #var interesting_book_keypair: Pubkey = Pubkey.new_from_string("eQigyb3RRTTJmqZieidXHxAQRfXqtciLQGXaCsBCXWa")
@@ -95,9 +102,9 @@ func init_book_mints():
 	#for mint in MINTS:
 	#	var ix = SystemProgram.create_account(payer, mint);
 	
-	print(decent_book_keypair.get_public_string())
-	print(interesting_book_keypair.get_public_string())
-	print(fascinating_book_keypair.get_public_string())
+	print(decent_book_keypair.get_public_bytes())
+	print(interesting_book_keypair.get_public_bytes())
+	print(fascinating_book_keypair.get_public_bytes())
 	
 	var accounts = [
 		payer,
@@ -120,7 +127,6 @@ func init_book_mints():
 	await $BookTransaction.confirmed
 
 func new_scientist():
-	print("AHAHOERCCAHÄRÄ")
 	var ata: Pubkey = Pubkey.new_associated_token_address(payer, mint_keypair)
 	var decent_book_account: Pubkey = Pubkey.new_associated_token_address(payer, decent_book_keypair)
 	var interesting_book_account: Pubkey = Pubkey.new_associated_token_address(payer, interesting_book_keypair)
@@ -137,7 +143,8 @@ func new_scientist():
 	]
 	print(mint_keypair.get_public_string())
 	
-	var ix = $AnchorProgram.build_instruction("new_scientist", accounts, null)
+	print(scientist_name)
+	var ix = $AnchorProgram.build_instruction("new_scientist", accounts, scientist_name)
 	
 	$Transaction.set_payer(payer)
 	$Transaction.add_instruction(ix)
@@ -195,6 +202,8 @@ func read_book():
 		book_type = 3
 	elif ib_amount > 0:
 		book_type = 2
+	
+	print(book_type)
 	
 	var ix = $AnchorProgram.build_instruction("research", accounts, AnchorProgram.u8(book_type))
 	
@@ -313,10 +322,10 @@ func _ready():
 	#init(Keypair.new_random())
 
 func init(pk):
-	mint_keypair = pk
-	print("init book mints")
-	await init_book_mints()
-	print("Hehhe")
+	payer = pk
+	# Shhhhhhhhhh
+	mint_keypair = Keypair.new_from_seed(pk.get_public_bytes())
+	#await init_book_mints()
 	await new_scientist()
 	#await read_book()
 	#await publish_book()

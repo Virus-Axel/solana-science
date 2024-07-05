@@ -6,6 +6,7 @@ const SAVES_DIR = "user://"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	#show_naming()
 	$AnimationPlayer.play("new_animation")
 	var wallets = $WalletAdapter.get_available_wallets()
@@ -22,6 +23,12 @@ func show_naming():
 	modulate.r = 0.2
 	modulate.g = 0.2
 	modulate.b = 0.2
+	
+func remove_naming():
+	$Panel.visible = false
+	modulate.r = 1.0
+	modulate.g = 1.0
+	modulate.b = 1.0
 	
 func show_load():
 	$Panel2.visible = true
@@ -74,7 +81,6 @@ func show_load_files():
 func _on_button_9_pressed():
 	var payer = Keypair.new_random()
 	var scientist_name = $Panel/LineEdit.text
-	print(SAVES_DIR + scientist_name + ".json")
 	payer.save_to_file(SAVES_DIR + scientist_name + ".json")
 
 	$Panel/Transaction.set_payer($WalletAdapter)
@@ -93,6 +99,7 @@ func _on_button_9_pressed():
 	
 	var new_scene = load("res://house.tscn").instantiate()
 	get_tree().root.add_child(new_scene)
+	new_scene.get_node("Ui/Control").scientist_name = scientist_name
 	new_scene.get_node("Ui").init(payer)
 	get_node("/root/TitleScreen").queue_free()
 

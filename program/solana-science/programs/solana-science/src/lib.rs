@@ -29,6 +29,7 @@ declare_id!("Bp7LbjQdrAGGQft9TyJYiGvmKP6NzHZvvD35wiW12FMQ");
 
 const AUTHORITY_SEED: &[u8] = b"SOLANA_SCIENCE_AUTHORITY_SEED";
 const GAME_ACCOUNT_SEED: &[u8] = b"SOLANA_SCIENCE_GAME_ACCOUNT";
+const MY_URL: &str = "http://solanascience.com/";
 
 const EXP_PER_BOOK: f64 = 1.0;
 const TIME_TO_READ_BOOK: i64 = 120;
@@ -224,26 +225,26 @@ pub mod solana_science {
             ctx.accounts.decent_book_mint.to_account_info(),
             "Decent Book",
             "SSDB",
-            "http://solanascience.com/SSDB",
+            &(MY_URL.to_owned() + "SSDB"),
         )?;
         init_mint(
             &ctx,
             ctx.accounts.interesting_book_mint.to_account_info(),
             "Interesting Book",
             "ISDB",
-            "http://solanascience.com/ISDB",
+            &(MY_URL.to_owned() + "ISDB"),
         )?;
         init_mint(
             &ctx,
             ctx.accounts.fascinating_book_mint.to_account_info(),
             "Fascinating Book",
             "FSDB",
-            "http://solanascience.com/FSDB",
+            &(MY_URL.to_owned() + "FSDB"),
         )?;
         Ok(())
     }
 
-    pub fn new_scientist(ctx: Context<NewScientist>) -> Result<()> {
+    pub fn new_scientist(ctx: Context<NewScientist>, scientist_name: String) -> Result<()> {
         let bump = ctx.bumps.scientist_authority;
         let signer_seeds: &[&[&[u8]]] = &[&[AUTHORITY_SEED, &[bump]]];
 
@@ -294,9 +295,9 @@ pub mod solana_science {
                 },
             )
             .with_signer(signer_seeds),
-            "name11".to_string(),
-            "symbol1".to_string(),
-            "http://uri1.se".to_string(),
+            scientist_name,
+            "SolSci".to_string(),
+            (MY_URL.to_owned() + "SolSci").to_string(),
         )?;
 
         token_metadata_update_field(
@@ -501,9 +502,9 @@ pub mod solana_science {
         }
 
         let (current_book_key, exp_boost) = match book_type {
-            0 => (ctx.accounts.decent_book_mint.key(), 0.5),
-            1 => (ctx.accounts.interesting_book_mint.key(), 0.8),
-            2 => (ctx.accounts.fascinating_book_mint.key(), 2.0),
+            1 => (ctx.accounts.decent_book_mint.key(), 0.5),
+            2 => (ctx.accounts.interesting_book_mint.key(), 0.8),
+            3 => (ctx.accounts.fascinating_book_mint.key(), 2.0),
             _ => panic!(),
         };
 

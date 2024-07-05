@@ -29,6 +29,18 @@ idl = {
 "code": 6001.0,
 "msg": "Another bidder was quicker, try again",
 "name": "OutdatedBid"
+}, {
+"code": 6002.0,
+"msg": "Your scientist is out of ideas.",
+"name": "NoIdeas"
+}, {
+"code": 6003.0,
+"msg": "Unknown book mint.",
+"name": "UnknownBookMint"
+}, {
+"code": 6004.0,
+"msg": "You might be broke but you are not poor.",
+"name": "OutOfMoney"
 }],
 "instructions": [{
 "accounts": [{
@@ -200,7 +212,10 @@ idl = {
 "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
 "name": "token_program"
 }],
-"args": [],
+"args": [{
+"name": "scientist_name",
+"type": "string"
+}],
 "discriminator": [214.0, 14.0, 67.0, 235.0, 171.0, 31.0, 53.0, 80.0],
 "name": "new_scientist"
 }, {

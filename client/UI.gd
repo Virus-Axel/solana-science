@@ -13,9 +13,10 @@ var custom_data = {}
 var is_reading
 
 func update_reading_anim():
-	if $Control.has_any_books() and not is_reading and not $Button7/AnimationPlayer.is_playing():
-		play_read()
-		$Button7.disabled = false
+	if $Control.has_any_books() and not is_reading:
+		if not $Button7/AnimationPlayer.is_playing():
+			play_read()
+			$Button7.disabled = false
 	else:
 		$Button7/AnimationPlayer.stop()
 		$Button7.disabled = true
@@ -23,12 +24,16 @@ func update_reading_anim():
 func set_total_read(total):
 	get_parent().get_node("ShelfBooks").amount = total
 
-func set_is_reading():
+func set_is_reading(last_time):
 	is_reading = true
+	print("REAEDDEAE")
+	print(last_time)
+	get_parent()._on_ui_start_read(last_time)
 	update_reading_anim()
 
 func set_is_not_reading():
 	is_reading = false
+	get_parent()._on_ui_stop_read()
 	update_reading_anim()
 
 func update_books():
@@ -89,10 +94,14 @@ func parse_custom_data(data: PackedByteArray) -> Dictionary:
 		
 		ret[key] = value
 
-	if custom_data.has("Last Modified"):
-		if Time.get_unix_time_from_system() < float(custom_data["Last Modified"]):
-			set_is_reading()
+	if ret.has("Last Modified"):
+		if Time.get_unix_time_from_system() < float(ret["Last Modified"]):
+			set_is_reading(float(ret["Last Modified"]) - Time.get_unix_time_from_system())
+			print("AAAAAAAAAAAAAAAaaA")
+			print(float(ret["Last Modified"]) - Time.get_unix_time_from_system())
 		else:
+			print("BBBBBBBBBBBBBBBBBBBBB")
+			print(float(ret["Last Modified"]) - Time.get_unix_time_from_system())
 			set_is_not_reading()
 
 	return ret
@@ -195,6 +204,11 @@ func update_ui():
 	var decoded_data = SolanaUtils.bs64_decode(encoded_data)
 	custom_data = parse_custom_data(decoded_data)
 	
+	const RANDOM_FACTOR = 30.0
+	var total_read = sqrt(float(custom_data["Book Score"]) / RANDOM_FACTOR)
+
+	set_total_read(total_read)
+	
 	set_published_decent(int(custom_data["Published Decent Books"]))
 	set_published_interesting(int(custom_data["Published Interesting Books"]))
 	set_published_fascinating(int(custom_data["Published Fascinating Books"]))
@@ -219,8 +233,8 @@ func init(pk):
 	await load_key(pk)
 
 func load_key(pk):
-	print("TRYING_TO_SUBSCRIBE")
-	$Control.mint_keypair = pk
+	$Control.payer = pk
+	$Control.mint_keypair = Keypair.new_from_seed(pk.get_public_bytes())
 	scientist = $Control.mint_keypair.get_public_string()
 	$SolanaClient.account_subscribe($Control.decent_book_keypair, Callable(self, "decent_book_callback"))
 	$SolanaClient.account_subscribe($Control.interesting_book_keypair, Callable(self, "interesting_book_callback"))
@@ -229,7 +243,6 @@ func load_key(pk):
 	$SolanaClient.account_subscribe($Control.game_account, Callable(self, "game_account_changed"))
 	$SolanaClient.account_subscribe(scientist, Callable(self, "scientist_data_changed"))
 	
-	print("updating ui")
 	await update_ui()
 	update_books()
 	pass # Replace with function body.
@@ -256,7 +269,7 @@ func scientist_data_changed(params):
 	set_published_fascinating(int(custom_data["Published Fascinating Books"]))
 
 	const RANDOM_FACTOR = 30.0
-	var total_read = float(custom_data["Book Score"]) / RANDOM_FACTOR
+	var total_read = sqrt(float(custom_data["Book Score"]) / RANDOM_FACTOR)
 
 	set_total_read(total_read)
 

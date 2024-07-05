@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bwq5uuie4b8ni"]
+[gd_scene load_steps=21 format=3 uid="uid://bwq5uuie4b8ni"]
 
 [ext_resource type="Script" path="res://house.gd" id="1_vhmhj"]
 [ext_resource type="Material" uid="uid://0u76wuntn8io" path="res://materials/beard.tres" id="2_2fkm2"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://mcgi37upa88m" path="res://book_pile.tscn" id="8_u4kbd"]
 [ext_resource type="PackedScene" uid="uid://dewdsxubka7x8" path="res://book_pile_2.tscn" id="9_jgpy8"]
 [ext_resource type="PackedScene" uid="uid://c878dytrmtysy" path="res://book_pile_3.tscn" id="10_l42aq"]
+[ext_resource type="PackedScene" uid="uid://bth3hiyc4owf2" path="res://shelf_books.tscn" id="11_0ftmg"]
 
 [sub_resource type="Environment" id="Environment_epe23"]
 background_energy_multiplier = 0.0
@@ -451,37 +452,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.70369, 0, -5.39028)
 visible = false
 
 [node name="Camera" parent="scientist" index="1"]
-transform = Transform3D(0.122287, -0.00687299, 0.0417319, -0.000235345, 0.127562, 0.0216983, -0.0422934, -0.0205824, 0.120543, -3.93812, -1.97623, 6.62019)
+transform = Transform3D(0.120398, -0.00793905, 0.046737, -1.90403e-08, 0.127567, 0.0216695, -0.0474065, -0.0201628, 0.118697, -3.65293, -1.97509, 6.60027)
 
 [node name="Skeleton3D" parent="scientist/Armature" index="0"]
-bones/0/rotation = Quaternion(0.40951, 0.00278638, -0.00125054, 0.912301)
-bones/1/rotation = Quaternion(-0.407336, -0.000622846, -0.00137867, 0.913277)
-bones/2/rotation = Quaternion(0.0128425, 2.80612e-06, 7.34246e-06, 0.999918)
-bones/3/rotation = Quaternion(0.527943, -0.0221985, -0.0212262, 0.848724)
-bones/4/rotation = Quaternion(0.283473, -0.14732, 0.871466, 0.372138)
+bones/0/rotation = Quaternion(0.409512, 2.1751e-07, 9.76351e-08, 0.912305)
+bones/1/rotation = Quaternion(-0.407337, -1.08871e-07, -1.45675e-07, 0.913278)
+bones/2/rotation = Quaternion(0.0124639, -3.8009e-14, 2.97163e-09, 0.999922)
+bones/3/rotation = Quaternion(0.536284, -6.53245e-14, 1.2786e-07, 0.844038)
+bones/4/rotation = Quaternion(0.287631, -0.144201, 0.872132, 0.368593)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.0748795, -0.0437057, 0.289593, 0.953215)
 bones/6/rotation = Quaternion(0.552119, -0.0655838, -0.492205, 0.669774)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.00659329, 0.00026872, -0.154047, 0.988042)
-bones/8/rotation = Quaternion(0.0118115, 0.000382998, 0.265531, 0.96403)
+bones/7/rotation = Quaternion(-0.00681448, 2.89127e-07, -0.153902, 0.988063)
+bones/8/rotation = Quaternion(0.0117498, 2.5111e-07, 0.265364, 0.964077)
 bones/8/scale = Vector3(1, 1, 1)
-bones/9/rotation = Quaternion(-0.344819, -0.119818, 0.832823, -0.416113)
+bones/9/rotation = Quaternion(-0.344469, -0.120676, 0.831846, -0.418104)
 bones/9/scale = Vector3(1, 1, 1)
-bones/10/rotation = Quaternion(0.0890387, 0.429798, -0.329748, 0.83583)
+bones/10/rotation = Quaternion(0.0892703, 0.43069, -0.328722, 0.83575)
 bones/11/rotation = Quaternion(0.600584, -0.405581, 0.506621, 0.467052)
 bones/11/scale = Vector3(1, 1, 1)
 bones/12/rotation = Quaternion(-0.00740192, -1.7204e-07, 0.169069, 0.985576)
 bones/12/scale = Vector3(1, 1, 1)
 bones/13/rotation = Quaternion(0.01182, 3.13168e-08, -0.269982, 0.962793)
 bones/13/scale = Vector3(1, 1, 1)
-bones/14/rotation = Quaternion(0.341745, 0.0712416, -0.188383, 0.917958)
+bones/14/rotation = Quaternion(0.342366, 0.0679094, -0.182548, 0.919157)
 bones/14/scale = Vector3(1, 1, 1)
-bones/15/rotation = Quaternion(0.677845, 0.137122, 0.138366, 0.708928)
+bones/15/rotation = Quaternion(0.678424, 0.134773, 0.140612, 0.708382)
 bones/15/scale = Vector3(1, 1, 1)
-bones/16/rotation = Quaternion(0.339858, -0.00819891, 0.184058, 0.922254)
+bones/16/rotation = Quaternion(0.340135, -0.00741803, 0.181663, 0.922633)
 bones/16/scale = Vector3(1, 1, 1)
-bones/17/rotation = Quaternion(0.694379, -0.148966, -0.0137923, 0.703886)
+bones/17/rotation = Quaternion(0.693002, -0.149513, -0.0133101, 0.705136)
 
 [node name="Cube_001" parent="scientist/Armature/Skeleton3D" index="1"]
 surface_material_override/0 = ExtResource("2_2fkm2")
@@ -552,5 +552,8 @@ transform = Transform3D(1.24283, 0, 0, 0, 1.18741, 0, 0, 0, 1.24283, -12.0128, -
 
 [node name="BookPile3" parent="." instance=ExtResource("10_l42aq")]
 transform = Transform3D(1.169, 0, 0, 0, 1.07379, 0, 0, 0, 1.169, -15.5857, -3.92846, -4.16309)
+
+[node name="ShelfBooks" parent="." instance=ExtResource("11_0ftmg")]
+transform = Transform3D(1.08744, 0, 0, 0, 1.08744, 0, 0, 0, 1.08744, -15.4841, -2.61736, -5.37748)
 
 [editable path="scientist"]

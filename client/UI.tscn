@@ -1,9 +1,19 @@
-[gd_scene load_steps=10 format=3 uid="uid://d2rmh57p1mrr4"]
+[gd_scene load_steps=16 format=3 uid="uid://d2rmh57p1mrr4"]
 
 [ext_resource type="Script" path="res://UI.gd" id="1_l1uqb"]
+[ext_resource type="Texture2D" uid="uid://bau4jkoxdunc6" path="res://icons/book1.png" id="2_b0a0q"]
 [ext_resource type="PackedScene" uid="uid://c76kioxt2ivp4" path="res://main.tscn" id="2_unkvn"]
+[ext_resource type="Texture2D" uid="uid://beyb8ciyflfsp" path="res://icons/book2.png" id="3_0m8f8"]
 [ext_resource type="PackedScene" uid="uid://b5byi6jqnrq7m" path="res://book_icon_picker.tscn" id="3_26v30"]
+[ext_resource type="Texture2D" uid="uid://du1i0cf5v11jl" path="res://icons/book3.png" id="4_phpta"]
 [ext_resource type="Texture2D" uid="uid://jfnonurgilvs" path="res://icons/light.png" id="4_qks04"]
+[ext_resource type="Texture2D" uid="uid://13wobwxadkbl" path="res://icons/coins.png" id="8_5cc4y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_csjks"]
+bg_color = Color(0.462745, 0.462745, 0.462745, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g3xpk"]
+bg_color = Color(0.98436, 0.88275, 0.415717, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ash0m"]
 bg_color = Color(0.98436, 0.88275, 0.415717, 1)
@@ -61,23 +71,107 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l1uqb")
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 69.0
-offset_top = 126.0
-offset_right = 139.0
-offset_bottom = 149.0
-text = "For Sale: "
+[node name="Label10" type="Label" parent="."]
+layout_mode = 1
+offset_left = 34.0
+offset_top = 24.0
+offset_right = 188.0
+offset_bottom = 94.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 11
+theme_override_constants/shadow_outline_size = 31
+theme_override_font_sizes/font_size = 51
+text = "Lvl: 0"
 
-[node name="Label2" type="Label" parent="."]
-layout_mode = 0
-offset_left = 69.0
-offset_top = 150.0
-offset_right = 116.0
-offset_bottom = 173.0
-text = "Price: "
+[node name="ProgressBar" type="ProgressBar" parent="Label10"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -8.0
+offset_bottom = 4.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_csjks")
+theme_override_styles/fill = SubResource("StyleBoxFlat_g3xpk")
+show_percentage = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -219.0
+offset_top = 88.0
+offset_right = -17.0
+offset_bottom = 114.0
+grow_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_b0a0q")
+expand_mode = 2
+
+[node name="Label4" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 21
+theme_override_font_sizes/font_size = 18
+text = "x0"
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_0m8f8")
+expand_mode = 2
+
+[node name="Label6" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 21
+theme_override_font_sizes/font_size = 18
+text = "x0"
+
+[node name="TextureRect3" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_phpta")
+expand_mode = 2
+
+[node name="Label5" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 21
+theme_override_font_sizes/font_size = 18
+text = "x0"
+
+[node name="Label11" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -177.0
+offset_top = 13.0
+offset_right = -23.0
+offset_bottom = 83.0
+grow_horizontal = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 11
+theme_override_constants/shadow_outline_size = 31
+theme_override_font_sizes/font_size = 51
+text = "Volos Pierre"
 
 [node name="Button" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 66.0
 offset_top = 181.0
@@ -86,39 +180,13 @@ offset_bottom = 222.0
 text = "Bid "
 
 [node name="Label3" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 699.0
 offset_top = 109.0
 offset_right = 764.0
 offset_bottom = 147.0
 text = "Cash: "
-
-[node name="Label4" type="Label" parent="."]
-layout_mode = 0
-offset_left = 384.0
-offset_top = 17.0
-offset_right = 424.0
-offset_bottom = 40.0
-text = "Ideas: "
-
-[node name="Label5" type="Label" parent="."]
-layout_mode = 0
-offset_left = 359.0
-offset_top = 293.0
-offset_right = 453.0
-offset_bottom = 316.0
-text = "Book score: "
-
-[node name="ItemList" type="ItemList" parent="."]
-layout_mode = 0
-offset_left = 633.0
-offset_top = 300.0
-offset_right = 952.0
-offset_bottom = 394.0
-item_count = 3
-item_0/text = "Published Decent Books: "
-item_1/text = "Published Interesting Books: "
-item_2/text = "Published Fascinating Books: "
 
 [node name="SolanaClient" type="SolanaClient" parent="."]
 
@@ -131,68 +199,12 @@ offset_right = 480.0
 offset_bottom = 246.0
 text = "Network Error..."
 
-[node name="Button2" type="Button" parent="."]
-layout_mode = 0
-offset_left = 728.0
-offset_top = 454.0
-offset_right = 825.0
-offset_bottom = 508.0
-text = "Refresh"
-
-[node name="Button3" type="Button" parent="."]
-layout_mode = 0
-offset_left = 973.0
-offset_top = 302.0
-offset_right = 1062.0
-offset_bottom = 334.0
-text = "Publish"
-
-[node name="Button4" type="Button" parent="."]
-layout_mode = 0
-offset_left = 974.0
-offset_top = 335.0
-offset_right = 1063.0
-offset_bottom = 367.0
-text = "Publish"
-
-[node name="Button5" type="Button" parent="."]
-layout_mode = 0
-offset_left = 973.0
-offset_top = 369.0
-offset_right = 1062.0
-offset_bottom = 401.0
-text = "Publish"
-
-[node name="Label7" type="Label" parent="."]
-layout_mode = 0
-offset_left = 316.0
-offset_top = 386.0
-offset_right = 431.0
-offset_bottom = 409.0
-text = "Decent Books: "
-
 [node name="Control" parent="." instance=ExtResource("2_unkvn")]
 layout_mode = 1
 offset_left = -2.0
 offset_top = 622.0
 offset_right = -2.0
 offset_bottom = 622.0
-
-[node name="Label8" type="Label" parent="."]
-layout_mode = 0
-offset_left = 310.0
-offset_top = 420.0
-offset_right = 455.0
-offset_bottom = 443.0
-text = "Interesting Books: "
-
-[node name="Label9" type="Label" parent="."]
-layout_mode = 0
-offset_left = 307.0
-offset_top = 457.0
-offset_right = 455.0
-offset_bottom = 480.0
-text = "Fascinating Books: "
 
 [node name="Button6" type="Button" parent="."]
 layout_mode = 1
@@ -238,24 +250,8 @@ theme_override_constants/shadow_outline_size = 23
 theme_override_font_sizes/font_size = 31
 text = "Bid"
 
-[node name="Label" type="Label" parent="Button6"]
-visible = false
-layout_mode = 0
-offset_left = -76.0
-offset_top = -46.0
-offset_right = -34.0
-offset_bottom = -12.0
-theme_override_colors/font_color = Color(0, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0.345098, 0.917647, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_constants/outline_size = 5
-theme_override_constants/shadow_outline_size = 17
-theme_override_font_sizes/font_size = 24
-text = "200"
-
 [node name="Label4" type="Label" parent="Button6"]
+visible = false
 layout_mode = 0
 offset_left = 43.0
 offset_top = -47.0
@@ -335,6 +331,18 @@ offset_right = 113.843
 offset_bottom = -25.0
 grow_vertical = 0
 
+[node name="Label" type="Label" parent="BookIconPicker"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.345098, 0.917647, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 17
+theme_override_font_sizes/font_size = 24
+text = "200"
+
 [node name="Panel" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 1
@@ -409,8 +417,42 @@ theme_override_constants/shadow_outline_size = 23
 theme_override_font_sizes/font_size = 31
 text = "Book"
 
-[connection signal="pressed" from="Button" to="." method="place_bid"]
-[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
-[connection signal="pressed" from="Button3" to="Control" method="publish_book"]
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="BalanceClient1" type="SolanaClient" parent="."]
+
+[node name="BalanceClient3" type="SolanaClient" parent="."]
+
+[node name="BalanceClient2" type="SolanaClient" parent="."]
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 22.0
+offset_top = 110.0
+offset_right = 173.0
+offset_bottom = 176.0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("8_5cc4y")
+expand_mode = 2
+
+[node name="Label4" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 21
+theme_override_font_sizes/font_size = 18
+text = "x0"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="mouse_entered" from="Button6" to="." method="_on_button_6_mouse_entered"]
 [connection signal="mouse_exited" from="Button6" to="." method="_on_button_6_mouse_exited"]
+[connection signal="pressed" from="Button6" to="." method="place_bid"]
+[connection signal="pressed" from="Button7" to="." method="_on_button_7_pressed"]
+[connection signal="pressed" from="Panel/Button8" to="Control" method="publish_book"]
+[connection signal="timeout" from="Timer" to="." method="update_ideas"]

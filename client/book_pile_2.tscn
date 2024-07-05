@@ -1,41 +1,58 @@
-[gd_scene load_steps=2 format=3 uid="uid://dewdsxubka7x8"]
+[gd_scene load_steps=3 format=3 uid="uid://dewdsxubka7x8"]
 
+[ext_resource type="Script" path="res://book_pile.gd" id="1_2t2nm"]
 [ext_resource type="PackedScene" uid="uid://bjk1dnle1qjsy" path="res://models/books2.glb" id="1_fiw3s"]
 
 [node name="BookPile2" type="Node3D"]
+script = ExtResource("1_2t2nm")
 
 [node name="books2" parent="." instance=ExtResource("1_fiw3s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0351931, 0, 0.121365)
+visible = false
 
 [node name="books3" parent="." instance=ExtResource("1_fiw3s")]
 transform = Transform3D(0.520369, 0, 0.853942, 0, 1, 0, -0.853942, 0, 0.520369, 0.012669, 0.0980671, 0.121365)
+visible = false
 
 [node name="books4" parent="." instance=ExtResource("1_fiw3s")]
 transform = Transform3D(0.891205, 0, 0.453602, 0, 1, 0, -0.453602, 0, 0.891205, 0.0351931, 0.206457, 0.121365)
+visible = false
 
 [node name="books5" parent="." instance=ExtResource("1_fiw3s")]
 transform = Transform3D(0.952231, 0, 0.305379, 0, 1, 0, -0.305379, 0, 0.952231, 0.0919873, 0.313126, 0.121365)
+visible = false
 
 [node name="books6" parent="." instance=ExtResource("1_fiw3s")]
 transform = Transform3D(0.815734, 0, -0.578427, 0, 1, 0, 0.578427, 0, 0.815734, 0.0171262, 0.412914, 0.121365)
+visible = false
 
 [node name="books7" parent="." instance=ExtResource("1_fiw3s")]
 transform = Transform3D(-0.974083, 0, 0.226192, 0, 1, 0, -0.226192, 0, -0.974083, 0.0351931, 0.517863, 0.121365)
+visible = false
 
 [node name="books8" parent="." instance=ExtResource("1_fiw3s")]
 transform = Transform3D(0.0453978, 0, -0.998969, 0, 1, 0, 0.998969, 0, 0.0453978, 0.0351931, 0.621092, 0.140902)
+visible = false
 
 [node name="books9" parent="." instance=ExtResource("1_fiw3s")]
 transform = Transform3D(-0.0815906, 0, -0.996666, 0, 1, 0, 0.996666, 0, -0.0815906, 0.0351931, 0.727761, 0.121365)
+visible = false
 
 [node name="books10" parent="." instance=ExtResource("1_fiw3s")]
 transform = Transform3D(-0.710271, 0, 0.703928, 0, 1, 0, -0.703928, 0, -0.710271, 0.0351931, 0.829269, 0.0761186)
+visible = false
 
 [node name="books11" parent="." instance=ExtResource("1_fiw3s")]
 transform = Transform3D(-0.241973, 0, -0.970283, 0, 1, 0, 0.970283, 0, -0.241973, 0.0351931, 0.937659, 0.121365)
+visible = false
 
 [node name="books12" parent="." instance=ExtResource("1_fiw3s")]
 transform = Transform3D(0.743612, 0, 0.668612, 0, 1, 0, -0.668612, 0, 0.743612, 0.0160219, 1.04777, 0.121365)
+visible = false
 
 [node name="books13" parent="." instance=ExtResource("1_fiw3s")]
 transform = Transform3D(-0.646404, 0, 0.762996, 0, 1, 0, -0.762996, 0, -0.646404, 0.079509, 1.151, 0.121365)
+visible = false
+
+[node name="AnimBook" parent="." instance=ExtResource("1_fiw3s")]
+transform = Transform3D(-0.646404, 0, 0.762996, 0, 1, 0, -0.762996, 0, -0.646404, 0.079509, 10.1872, 0.121365)

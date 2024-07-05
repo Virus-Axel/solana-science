@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://mcgi37upa88m"]
+[gd_scene load_steps=10 format=3 uid="uid://mcgi37upa88m"]
 
+[ext_resource type="Script" path="res://book_pile.gd" id="1_2rquv"]
 [ext_resource type="PackedScene" uid="uid://c8w2yxwo75mlo" path="res://models/books1.dae" id="1_gufe4"]
 [ext_resource type="Material" uid="uid://bjdxhet2o412r" path="res://materials/book_cover_brown.tres" id="2_mqgoc"]
 [ext_resource type="Texture2D" uid="uid://clr866e4ivl7a" path="res://models/book.jpg" id="3_5toti"]
@@ -22,7 +23,7 @@ cull_mode = 2
 albedo_color = Color(0.8, 0.8, 0.8, 1)
 roughness = 0.0764706
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_upfbt"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_2uhih"]
 _surfaces = [{
 "aabb": AABB(-1.0038, -0.0925891, -1, 2.6892, 1.00717, 2),
 "format": 34896613377,
@@ -98,19 +99,22 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 253, 255, 254, 255, 84, 213, 0, 0, 0, 0, 0, 0, 84, 213, 0, 0, 0, 0, 254, 255, 84, 213, 0, 0, 253, 255, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 253, 255, 0, 0, 84, 213, 255, 255, 0, 0, 254, 255, 84, 213, 255, 255, 0, 0, 0, 0, 84, 213, 255, 255, 253, 255, 254, 255, 255, 191, 0, 0, 0, 0, 254, 255, 255, 191, 255, 255, 0, 0, 254, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 254, 255, 255, 191, 0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 253, 255, 0, 0, 255, 255, 255, 255, 253, 255, 254, 255, 255, 255, 255, 255, 253, 255, 0, 0, 255, 255, 0, 0, 253, 255, 0, 0, 84, 213, 255, 255, 253, 255, 0, 0, 255, 255, 255, 255, 253, 255, 254, 255, 84, 213, 0, 0, 253, 255, 254, 255, 255, 191, 255, 255, 0, 0, 254, 255, 255, 191, 0, 0, 253, 255, 254, 255, 255, 255, 84, 213, 84, 213, 84, 213, 84, 213, 84, 213, 84, 213, 255, 191, 255, 191, 255, 191, 255, 191, 255, 191, 255, 191, 170, 42, 170, 42, 170, 42, 170, 42, 170, 42, 170, 42, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 255, 127, 0, 0, 255, 127, 0, 0, 255, 127, 255, 127, 255, 191, 255, 127, 255, 191, 255, 127, 255, 191, 84, 213, 84, 213, 255, 191, 255, 191, 170, 42, 170, 42, 255, 255, 255, 255, 0, 0, 255, 127, 255, 127, 255, 191)
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_upfbt")
+shadow_mesh = SubResource("ArrayMesh_2uhih")
 
 [node name="BookPile" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0324554, 2.38419e-07, -0.382537)
+script = ExtResource("1_2rquv")
 
 [node name="books1" parent="." instance=ExtResource("1_gufe4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00678474, 0.0142679, 0.412904)
+visible = false
 
 [node name="Cube" parent="books1" index="0"]
 surface_material_override/0 = ExtResource("2_mqgoc")
 
 [node name="books2" parent="." instance=ExtResource("1_gufe4")]
 transform = Transform3D(0.875524, 0, -0.483175, 0, 1, 0, 0.483175, 0, 0.875524, -0.00678474, 0.1159, 0.412904)
+visible = false
 
 [node name="Cube" parent="books2" index="0"]
 mesh = SubResource("ArrayMesh_ynkpi")
@@ -118,6 +122,7 @@ surface_material_override/0 = ExtResource("2_mqgoc")
 
 [node name="books3" parent="." instance=ExtResource("1_gufe4")]
 transform = Transform3D(-0.619368, 0, -0.785101, 0, 1, 0, 0.785101, 0, -0.619368, -0.00678474, 0.217827, 0.412904)
+visible = false
 
 [node name="Cube" parent="books3" index="0"]
 mesh = SubResource("ArrayMesh_ynkpi")
@@ -125,6 +130,7 @@ surface_material_override/0 = ExtResource("2_mqgoc")
 
 [node name="books4" parent="." instance=ExtResource("1_gufe4")]
 transform = Transform3D(0.640954, 0, 0.767579, 0, 1, 0, -0.767579, 0, 0.640954, -0.00678474, 0.324029, 0.372919)
+visible = false
 
 [node name="Cube" parent="books4" index="0"]
 mesh = SubResource("ArrayMesh_ynkpi")
@@ -132,6 +138,7 @@ surface_material_override/0 = ExtResource("2_mqgoc")
 
 [node name="books5" parent="." instance=ExtResource("1_gufe4")]
 transform = Transform3D(-0.698303, 0, -0.715802, 0, 1, 0, 0.715802, 0, -0.698303, -0.00678474, 0.422856, 0.432775)
+visible = false
 
 [node name="Cube" parent="books5" index="0"]
 mesh = SubResource("ArrayMesh_ynkpi")
@@ -139,6 +146,7 @@ surface_material_override/0 = ExtResource("2_mqgoc")
 
 [node name="books6" parent="." instance=ExtResource("1_gufe4")]
 transform = Transform3D(-0.321803, 0, -0.946807, 0, 1, 0, 0.946807, 0, -0.321803, -0.00678474, 0.521683, 0.412904)
+visible = false
 
 [node name="Cube" parent="books6" index="0"]
 mesh = SubResource("ArrayMesh_ynkpi")
@@ -146,6 +154,7 @@ surface_material_override/0 = ExtResource("2_mqgoc")
 
 [node name="books7" parent="." instance=ExtResource("1_gufe4")]
 transform = Transform3D(-0.332836, 0, 0.942985, 0, 1, 0, -0.942985, 0, -0.332836, -0.00678474, 0.614609, 0.412904)
+visible = false
 
 [node name="Cube" parent="books7" index="0"]
 mesh = SubResource("ArrayMesh_ynkpi")
@@ -153,6 +162,7 @@ surface_material_override/0 = ExtResource("2_mqgoc")
 
 [node name="books8" parent="." instance=ExtResource("1_gufe4")]
 transform = Transform3D(-0.70301, 0, -0.71118, 0, 1, 0, 0.71118, 0, -0.70301, 0.0236825, 0.716386, 0.412904)
+visible = false
 
 [node name="Cube" parent="books8" index="0"]
 mesh = SubResource("ArrayMesh_ynkpi")
@@ -160,6 +170,7 @@ surface_material_override/0 = ExtResource("2_mqgoc")
 
 [node name="books9" parent="." instance=ExtResource("1_gufe4")]
 transform = Transform3D(-0.643229, 0, -0.765674, 0, 1, 0, 0.765674, 0, -0.643229, -0.00678474, 0.821114, 0.368929)
+visible = false
 
 [node name="Cube" parent="books9" index="0"]
 mesh = SubResource("ArrayMesh_ynkpi")
@@ -167,6 +178,7 @@ surface_material_override/0 = ExtResource("2_mqgoc")
 
 [node name="books10" parent="." instance=ExtResource("1_gufe4")]
 transform = Transform3D(0.930373, 0, 0.366615, 0, 1, 0, -0.366615, 0, 0.930373, -0.00678474, 0.921416, 0.412904)
+visible = false
 
 [node name="Cube" parent="books10" index="0"]
 mesh = SubResource("ArrayMesh_ynkpi")
@@ -174,6 +186,7 @@ surface_material_override/0 = ExtResource("2_mqgoc")
 
 [node name="books11" parent="." instance=ExtResource("1_gufe4")]
 transform = Transform3D(-0.332918, 0, 0.942956, 0, 1, 0, -0.942956, 0, -0.332918, -0.0435097, 1.01729, 0.412904)
+visible = false
 
 [node name="Cube" parent="books11" index="0"]
 mesh = SubResource("ArrayMesh_ynkpi")
@@ -181,8 +194,16 @@ surface_material_override/0 = ExtResource("2_mqgoc")
 
 [node name="books12" parent="." instance=ExtResource("1_gufe4")]
 transform = Transform3D(0.65478, 0, 0.755819, 0, 1, 0, -0.755819, 0, 0.65478, -0.00678474, 1.11317, 0.412904)
+visible = false
 
 [node name="Cube" parent="books12" index="0"]
+mesh = SubResource("ArrayMesh_ynkpi")
+surface_material_override/0 = ExtResource("2_mqgoc")
+
+[node name="AnimBook" parent="." instance=ExtResource("1_gufe4")]
+transform = Transform3D(0.65478, 0, 0.755819, 0, 1, 0, -0.755819, 0, 0.65478, 0, 10.5136, 0)
+
+[node name="Cube" parent="AnimBook" index="0"]
 mesh = SubResource("ArrayMesh_ynkpi")
 surface_material_override/0 = ExtResource("2_mqgoc")
 
@@ -198,3 +219,4 @@ surface_material_override/0 = ExtResource("2_mqgoc")
 [editable path="books10"]
 [editable path="books11"]
 [editable path="books12"]
+[editable path="AnimBook"]

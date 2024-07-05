@@ -6,11 +6,24 @@ var decent_book_keypair: Keypair = Keypair.new_random()
 var interesting_book_keypair: Keypair = Keypair.new_random()
 var fascinating_book_keypair: Keypair = Keypair.new_random()
 
+#var decent_book_keypair: Pubkey = Pubkey.new_from_string("FDMnm7Wh2cgFVAQ81EHrFJQ8QVmgNqqKvYo5HJGWSQDN")
+#var interesting_book_keypair: Pubkey = Pubkey.new_from_string("eQigyb3RRTTJmqZieidXHxAQRfXqtciLQGXaCsBCXWa")
+#var fascinating_book_keypair: Pubkey = Pubkey.new_from_string("BW4Q2XGZe47Xh8gVwHh31KnBUjfgZURuXb51XEqqibHK")
 
-func get_token_balance(token_account: Pubkey):
-	$SolanaClient.get_token_account_balance(token_account.to_string())
+
+var game_account
+
+var fb_amount = 0
+var ib_amount = 0
+var db_amount = 0
+
+func has_any_books():
+	return fb_amount > 0 || db_amount > 0 || ib_amount > 0
+
+func get_token_balance(token_account: Pubkey, client):
+	client.get_token_account_balance(token_account.to_string())
 	
-	var response = await $SolanaClient.http_response_received
+	var response = await client.http_response_received
 	print(response)
 	if not response.has("result"):
 		return null
@@ -26,27 +39,13 @@ func get_token_balances():
 	var fascinating_book_account: Pubkey = Pubkey.new_associated_token_address(payer, fascinating_book_keypair)
 	
 	return[
-		await get_token_balance(decent_book_account),
-		await get_token_balance(interesting_book_account),
-		await get_token_balance(fascinating_book_account),
+		await get_token_balance(decent_book_account, $"../BalanceClient1"),
+		await get_token_balance(interesting_book_account, $"../BalanceClient2"),
+		await get_token_balance(fascinating_book_account, $"../BalanceClient3"),
 	]
 
 
-func get_game_account():
-	var game_account: Pubkey = Pubkey.new_pda(["SOLANA_SCIENCE_GAME_ACCOUNT"], $AnchorProgram.get_pid())
-	$SolanaClient.get_account_info(game_account.to_string())
-	
-	var response = await($SolanaClient.http_response_received)
-	if not response.has("result"):
-		return {}
-	
-	if not response["result"].has("value"):
-		return {}
-	
-	if response["result"]["value"] == null:
-		return {}
-	
-	var encoded_data = response["result"]["value"]["data"][0]
+func game_account_from_data(encoded_data: String):
 	var decoded_data = SolanaUtils.bs64_decode(encoded_data)
 	
 	var sale_book = Pubkey.new_from_bytes(decoded_data.slice(8, 40))
@@ -69,12 +68,37 @@ func get_game_account():
 		"seller_scientist" = seller_scientist,
 	}
 
+func get_game_account():
+	#game_account = Pubkey.new_pda(["SOLANA_SCIENCE_GAME_ACCOUNT"], $AnchorProgram.get_pid())
+	$SolanaClient.get_account_info(game_account.to_string())
+	
+	var response = await($SolanaClient.http_response_received)
+	if not response.has("result"):
+		return {}
+	
+	if not response["result"].has("value"):
+		return {}
+	
+	if response["result"]["value"] == null:
+		return {}
+		
+	if not response["result"]["value"].has("data"):
+		return {}
+	
+	var encoded_data = response["result"]["value"]["data"][0]
+	return game_account_from_data(encoded_data)
+
 
 func init_book_mints():
 	var mint_authority: Pubkey = Pubkey.new_pda(["SOLANA_SCIENCE_AUTHORITY_SEED"], $AnchorProgram.get_pid())
 	
 	#for mint in MINTS:
 	#	var ix = SystemProgram.create_account(payer, mint);
+	
+	print(decent_book_keypair.get_public_string())
+	print(interesting_book_keypair.get_public_string())
+	print(fascinating_book_keypair.get_public_string())
+	
 	var accounts = [
 		payer,
 		decent_book_keypair,
@@ -96,6 +120,7 @@ func init_book_mints():
 	await $BookTransaction.confirmed
 
 func new_scientist():
+	print("AHAHOERCCAHÄRÄ")
 	var ata: Pubkey = Pubkey.new_associated_token_address(payer, mint_keypair)
 	var decent_book_account: Pubkey = Pubkey.new_associated_token_address(payer, decent_book_keypair)
 	var interesting_book_account: Pubkey = Pubkey.new_associated_token_address(payer, interesting_book_keypair)
@@ -164,10 +189,17 @@ func read_book():
 		mint_authority,
 		TokenProgram2022.get_pid(),
 	]
-	var ix = $AnchorProgram.build_instruction("research", accounts, AnchorProgram.u8(1))
+	
+	var book_type = 1;
+	if fb_amount > 0:
+		book_type = 3
+	elif ib_amount > 0:
+		book_type = 2
+	
+	var ix = $AnchorProgram.build_instruction("research", accounts, AnchorProgram.u8(book_type))
 	
 	$Transaction2.set_payer(payer)
-	$Transaction2.add_instruction(ix)
+	$Transaction2.set_instructions([ix])
 	$Transaction2.update_latest_blockhash()
 	
 	$Transaction2.sign_and_send()
@@ -182,7 +214,7 @@ func place_bid(price):
 	var fascinating_book_account: Pubkey = Pubkey.new_associated_token_address(payer, fascinating_book_keypair)
 
 	var mint_authority: Pubkey = Pubkey.new_pda(["SOLANA_SCIENCE_AUTHORITY_SEED"], $AnchorProgram.get_pid())
-	var game_account: Pubkey = Pubkey.new_pda(["SOLANA_SCIENCE_GAME_ACCOUNT"], $AnchorProgram.get_pid())
+	game_account = Pubkey.new_pda(["SOLANA_SCIENCE_GAME_ACCOUNT"], $AnchorProgram.get_pid())
 	
 	var game_account_data = await get_game_account()
 	
@@ -226,7 +258,7 @@ func publish_book():
 	var fascinating_book_account: Pubkey = Pubkey.new_associated_token_address(payer, fascinating_book_keypair)
 
 	var mint_authority: Pubkey = Pubkey.new_pda(["SOLANA_SCIENCE_AUTHORITY_SEED"], $AnchorProgram.get_pid())
-	var game_account: Pubkey = Pubkey.new_pda(["SOLANA_SCIENCE_GAME_ACCOUNT"], $AnchorProgram.get_pid())
+	game_account = Pubkey.new_pda(["SOLANA_SCIENCE_GAME_ACCOUNT"], $AnchorProgram.get_pid())
 	
 	var game_account_data = await get_game_account()
 	
@@ -274,14 +306,20 @@ func publish_book():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
-	#init()
+	print(decent_book_keypair.get_public_string())
+	print(interesting_book_keypair.get_public_string())
+	print(fascinating_book_keypair.get_public_string())
+	game_account = Pubkey.new_pda(["SOLANA_SCIENCE_GAME_ACCOUNT"], $AnchorProgram.get_pid())
+	#init(Keypair.new_random())
 
-func init():
+func init(pk):
+	mint_keypair = pk
+	print("init book mints")
 	await init_book_mints()
+	print("Hehhe")
 	await new_scientist()
 	#await read_book()
-	await publish_book()
+	#await publish_book()
 	
 	
 	pass # Replace with function body.
